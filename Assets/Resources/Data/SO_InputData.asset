@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SO_InputData
   m_EditorClassIdentifier: 
   InputData:
-    HorizontalInputSpeed: 2
-    ClampSides: {x: -6, y: 6}
+    HorizontalInputSpeed: 1
+    ClampSides: {x: -4, y: 4}
     ClampSpeed: 0.007

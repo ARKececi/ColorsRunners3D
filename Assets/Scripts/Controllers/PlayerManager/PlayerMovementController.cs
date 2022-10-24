@@ -52,9 +52,7 @@ namespace Controllers.PlayerManager
                 if (_station)
                     Move();
                 else
-                {
                     StopMove();
-                }
             }
         }
         
