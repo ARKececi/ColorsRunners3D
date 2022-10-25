@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Command.StackManager;
 using Data.UnityObject;
 using Data.ValueObject;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Controllers.StackManager
 {
@@ -17,9 +14,8 @@ namespace Controllers.StackManager
         [Header("Data")] public StackData StackData;
         public List<GameObject> StackListObj;
         public List<GameObject> PoolListObj;
-        public StackAddCommand StackAddCommand;
-        public PoolAddCommand PoolAddCommand;
         public ListChangeCommand ListChangeCommand;
+        public bool _randomfor;
 
         #endregion
         #region Serialized Variables
@@ -30,7 +26,8 @@ namespace Controllers.StackManager
 
         #endregion
         #region Private Variables
-
+        
+        private float _random;
 
         #endregion
         #endregion
@@ -38,15 +35,17 @@ namespace Controllers.StackManager
         private void Awake()
         {
             StackData = GetStackData();
-            StackAddCommand = new StackAddCommand(ref StackListObj, player.transform, ref StackData);
-            PoolAddCommand = new PoolAddCommand(ref PoolListObj, Pool);
             ListChangeCommand = new ListChangeCommand(ref StackListObj, ref PoolListObj, transform, Pool,
                 player.transform, ref StackData);
         }
 
         private void Start()
         {
-            PoolInstantiate();
+            for (int i = 0; i < 10; i++)
+            {
+                PoolInstantiate();
+            }
+            
             for (int i = 0; i < 6; i++)
             {
                  ListChange(PoolListObj[0], 2);
@@ -68,8 +67,7 @@ namespace Controllers.StackManager
             int Count = StackListObj.Count;
             for (int i = 1; i <= Count - 1; i++)
             {
-                Vector3 stackPos = StackListObj[i].transform.localPosition;
-                stackPos = StackListObj[i - 1].transform.localPosition;
+                Vector3 stackPos = StackListObj[i - 1].transform.localPosition;
                 float lerpObjx = Mathf.Lerp(StackListObj[i].transform.localPosition.x, stackPos.x, StackData.LerpDelay);
                 float lerpobjz = Mathf.Lerp(StackListObj[i].transform.localPosition.z - StackData.StackBetween, stackPos.z, StackData.LerpDelay);
                 float lerpobjy = Mathf.Lerp(StackListObj[i].transform.localPosition.y, stackPos.y, StackData.LerpDelay);
@@ -77,23 +75,27 @@ namespace Controllers.StackManager
             }
         }
 
+        public void HelicopterPlatformStack()
+        {
+            int Count = StackListObj.Count;
+            for (int i = 1; i <= Count - 1; i++)
+            {
+                Vector3 stackPos = StackListObj[0].transform.localPosition;
+                if (_randomfor)
+                {
+                    _random = Random.Range(2, -2); 
+                }
+                float lerpobjz = Mathf.Lerp(StackListObj[i].transform.localPosition.z , stackPos.z + _random, StackData.LerpDelay * _random);
+                StackListObj[i].transform.localPosition = new Vector3(stackPos.x, stackPos.y, lerpobjz);
+            }
+            _randomfor = false;
+        }
+
         private void PoolInstantiate()
         {
-            for (int i = 0; i <= 10; i++)
-            {
-                GameObject playerObj = Instantiate(PlayerObj);
-                PoolAdd(playerObj);
-            }
-        }
-
-        private void PoolAdd(GameObject obj)
-        {
-            PoolAddCommand.PoolAddList(obj);
-        }
-
-        private void StackAdd(GameObject obj)
-        {
-            StackAddCommand.StackAddList(obj);
+            GameObject playerObj = Instantiate(PlayerObj);
+            PoolListObj.Add(playerObj);
+            playerObj.SetActive(false);
         }
 
         private void ListChange(GameObject obj, int list)

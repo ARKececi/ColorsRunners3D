@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SO_StackData
   m_EditorClassIdentifier: 
   StackData:
-    StackBetween: 0.7
-    LerpDelay: 0.268
+    StackBetween: 0.3
+    LerpDelay: 0.239

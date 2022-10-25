@@ -1014,7 +1014,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a59e7ff554c8c847a437b6f30ca70de, type: 2}
+  - {fileID: 2100000, guid: 4ac42ef95b85af240a15171e7fabcdd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1494,6 +1494,9 @@ GameObject:
   - component: {fileID: 7379655013467753385}
   - component: {fileID: 1053403465736717034}
   - component: {fileID: 1053403465736717039}
+  - component: {fileID: 1915552682191318271}
+  - component: {fileID: 1381548645370006978}
+  - component: {fileID: 392187371972245243}
   m_Layer: 0
   m_Name: PlayerObj
   m_TagString: Untagged
@@ -1565,6 +1568,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1915552682191318271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306058459111000937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 304dc38b82a54c49a2e5077c85d1a1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObjectsController: {fileID: 1381548645370006978}
+--- !u!114 &1381548645370006978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306058459111000937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0aa68abc4fc4bd6a794b5cba9c61376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &392187371972245243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306058459111000937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a616e7fee96f47f08f4939bb483ebb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObjectsManager: {fileID: 1915552682191318271}
 --- !u!1 &4429889824181846993
 GameObject:
   m_ObjectHideFlags: 0

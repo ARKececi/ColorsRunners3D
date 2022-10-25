@@ -1,5 +1,6 @@
 using System;
 using Controllers.StackManager;
+using Signals;
 using UnityEngine;
 
 namespace Managers
@@ -16,7 +17,7 @@ namespace Managers
 
         #region Private Variables
 
-        
+        private bool _helicopterMinigame;
 
         #endregion
 
@@ -31,12 +32,12 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-
+            StackSignals.Instance.minigameState += MinigameState;
         }
 
         private void UnsubscribeEvents()
         {
-
+            StackSignals.Instance.minigameState -= MinigameState;
         }
 
         private void OnDisable()
@@ -46,15 +47,28 @@ namespace Managers
 
         #endregion
 
+        private void MinigameState(string state)
+        {
+            if (state == "helicopterMinigame")
+            {
+                stackController._randomfor = true;
+                _helicopterMinigame = true;
+            }
+        }
+
         private void FixedUpdate()
         {
             stackController.PositionUpdate();
-            stackController.MoveStack();
+            if (_helicopterMinigame)
+            {
+                stackController.HelicopterPlatformStack();
+            }
+            else
+            {
+                stackController.MoveStack();
+            }
         }
-
-        private void OnStackAdd(GameObject obj)
-        {
-            
-        }
+        
+        
     }
 }

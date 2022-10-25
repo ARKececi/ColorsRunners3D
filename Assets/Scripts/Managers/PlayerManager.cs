@@ -29,6 +29,7 @@ namespace Managers
             InputSignals.Instance.onInputDragged += OnMovement;
             CoreGameSignals.Instance.onReset += OnReset;
             CoreGameSignals.Instance.onPlay += OnPlay;
+            CoreGameSignals.Instance.onFinish += OnFinish;
         }
 
         private void UnsubscribeEvents()
@@ -36,6 +37,7 @@ namespace Managers
             InputSignals.Instance.onInputDragged -= OnMovement;
             CoreGameSignals.Instance.onReset -= OnReset;
             CoreGameSignals.Instance.onPlay -= OnPlay;
+            CoreGameSignals.Instance.onFinish -= OnFinish;
         }
 
         private void OnDisable()

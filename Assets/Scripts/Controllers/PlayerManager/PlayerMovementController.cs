@@ -76,7 +76,7 @@ namespace Controllers.PlayerManager
 
         public void Finish()
         {
-            animator.SetTrigger("Idle");
+            //animator.SetTrigger("Idle");
             _station = false;
         }
 
