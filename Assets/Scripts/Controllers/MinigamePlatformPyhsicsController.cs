@@ -7,16 +7,14 @@ namespace Controllers
 {
     public class MinigamePlatformPyhsicsController : MonoBehaviour
     {
-
         private void OnTriggerEnter(Collider other)
         {
             if (transform.CompareTag("MinigameHelicopter"))
             {
                 if (other.CompareTag("Player"))
                 {
-                    DOVirtual.DelayedCall(.5f,()=>CoreGameSignals.Instance.onFinish?.Invoke());
-                    DOVirtual.DelayedCall(.51f,()=>StackSignals.Instance.minigameState?.Invoke("helicopterMinigame"));
-                    
+                    StackSignals.Instance.minigameState?.Invoke("HelicopterMinigame");
+                    DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onFinish?.Invoke());
                 }
             }
         }

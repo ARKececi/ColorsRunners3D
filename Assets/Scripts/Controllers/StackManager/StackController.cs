@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using Command.StackManager;
 using Data.UnityObject;
 using Data.ValueObject;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Controllers.StackManager
@@ -14,6 +16,7 @@ namespace Controllers.StackManager
         [Header("Data")] public StackData StackData;
         public List<GameObject> StackListObj;
         public List<GameObject> PoolListObj;
+        public List<GameObject> MinigameObjList;
         public ListChangeCommand ListChangeCommand;
         public bool _randomfor;
 
@@ -26,8 +29,6 @@ namespace Controllers.StackManager
 
         #endregion
         #region Private Variables
-        
-        private float _random;
 
         #endregion
         #endregion
@@ -41,12 +42,12 @@ namespace Controllers.StackManager
 
         private void Start()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 40; i++)
             {
                 PoolInstantiate();
             }
             
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 40; i++)
             {
                  ListChange(PoolListObj[0], 2);
             }
@@ -56,7 +57,8 @@ namespace Controllers.StackManager
 
         public void PositionUpdate()
         {
-            if (StackListObj[0] != null)
+            int count = StackListObj.Count;
+            if (count != 0)
             {
                 StackListObj[0].transform.position = player.transform.position;
             }
@@ -75,26 +77,31 @@ namespace Controllers.StackManager
             }
         }
 
-        public void HelicopterPlatformStack()
+        public IEnumerator HelicopterPlatformStack()
         {
-            int Count = StackListObj.Count;
-            for (int i = 1; i <= Count - 1; i++)
+            float ranInt = 0.13f;
+            for (int i = 0; i < 20; i++)
             {
-                Vector3 stackPos = StackListObj[0].transform.localPosition;
-                if (_randomfor)
-                {
-                    _random = Random.Range(2, -2); 
-                }
-                float lerpobjz = Mathf.Lerp(StackListObj[i].transform.localPosition.z , stackPos.z + _random, StackData.LerpDelay * _random);
-                StackListObj[i].transform.localPosition = new Vector3(stackPos.x, stackPos.y, lerpobjz);
+                //var random = Random.Range(0.0f, 2.0f);
+                
+                yield return new WaitForSeconds(ranInt);
+                //int stackObjListCount = StackListObj.Count;
+                Vector3 position = StackListObj[0].transform.position;
+                Vector3 lastPosition = StackListObj[1].transform.position;
+                player.transform.position = lastPosition;
+                var obj = StackListObj[0];
+                StackListObj.Remove(StackListObj[0]);
+                ranInt += 0.15f;
+                //obj.transform.DOMoveZ(position.z + random, random);
+
             }
-            _randomfor = false;
         }
 
         private void PoolInstantiate()
         {
             GameObject playerObj = Instantiate(PlayerObj);
             PoolListObj.Add(playerObj);
+            playerObj.transform.SetParent(Pool);
             playerObj.SetActive(false);
         }
 

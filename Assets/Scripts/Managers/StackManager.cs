@@ -1,5 +1,6 @@
 using System;
 using Controllers.StackManager;
+using DG.Tweening;
 using Signals;
 using UnityEngine;
 
@@ -49,26 +50,17 @@ namespace Managers
 
         private void MinigameState(string state)
         {
-            if (state == "helicopterMinigame")
+            if (state == "HelicopterMinigame")
             {
-                stackController._randomfor = true;
-                _helicopterMinigame = true;
+                //_helicopterMinigame = true;
+                StartCoroutine(stackController.HelicopterPlatformStack());
             }
         }
 
         private void FixedUpdate()
         {
             stackController.PositionUpdate();
-            if (_helicopterMinigame)
-            {
-                stackController.HelicopterPlatformStack();
-            }
-            else
-            {
-                stackController.MoveStack();
-            }
+            stackController.MoveStack();
         }
-        
-        
     }
 }
