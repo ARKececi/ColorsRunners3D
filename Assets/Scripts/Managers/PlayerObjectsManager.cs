@@ -29,9 +29,9 @@ namespace Managers
             
         }
 
-        public void PlayerColorChange()
+        public void PlayerColorChange(GameObject door)
         {
-            playerObjectsController.ColorChange();
+            playerObjectsController.Comparison(door);
         }
     }
 }

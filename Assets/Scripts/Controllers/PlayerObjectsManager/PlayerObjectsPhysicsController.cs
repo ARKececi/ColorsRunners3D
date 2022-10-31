@@ -19,7 +19,7 @@ namespace Controllers.PlayerObjectsManager
         {
             if (other.CompareTag("ColorChangeDoor"))
             {
-                playerObjectsManager.PlayerColorChange();
+                playerObjectsManager.PlayerColorChange(other.gameObject);
             }
         }
     }

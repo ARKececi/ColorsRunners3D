@@ -5,6 +5,6 @@ namespace Signals
 {
     public class StackSignals : MonoSingleton<StackSignals>
     {
-        public UnityAction<string> minigameState = delegate { };
+        public UnityAction onPlatformClose = delegate { };
     }
 }

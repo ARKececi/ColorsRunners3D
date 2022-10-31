@@ -33,12 +33,12 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            StackSignals.Instance.minigameState += MinigameState;
+            CoreGameSignals.Instance.minigameState += MinigameState;
         }
 
         private void UnsubscribeEvents()
         {
-            StackSignals.Instance.minigameState -= MinigameState;
+            CoreGameSignals.Instance.minigameState -= MinigameState;
         }
 
         private void OnDisable()
@@ -52,7 +52,6 @@ namespace Managers
         {
             if (state == "HelicopterMinigame")
             {
-                //_helicopterMinigame = true;
                 StartCoroutine(stackController.HelicopterPlatformStack());
             }
         }

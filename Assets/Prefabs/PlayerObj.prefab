@@ -1581,6 +1581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObjectsController: {fileID: 1381548645370006978}
+  animator: {fileID: 0}
 --- !u!114 &1381548645370006978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,6 +1594,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0aa68abc4fc4bd6a794b5cba9c61376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  door: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: c5df2d3bd4a74334892ca256bd82bd47, type: 2}
+  - {fileID: 2100000, guid: 28ac3ab4badfc5942be3a619e9af1061, type: 2}
+  - {fileID: 2100000, guid: 26fb41c21e199e6479a7ab7a92bc0902, type: 2}
 --- !u!114 &392187371972245243
 MonoBehaviour:
   m_ObjectHideFlags: 0

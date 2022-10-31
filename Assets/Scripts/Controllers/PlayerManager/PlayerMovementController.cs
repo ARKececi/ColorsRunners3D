@@ -23,7 +23,7 @@ namespace Controllers.PlayerManager
         private float _inputSpeed;
         private Vector2 _clamp;
         private bool _isTouchingPlayer = true;
-        private bool _station = true;
+        private bool _station;
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace Controllers.PlayerManager
         {
             if (_isTouchingPlayer)
             {
-                if (_station)
+                if (!_station)
                     Move();
                 else
                     StopMove();
@@ -70,20 +70,20 @@ namespace Controllers.PlayerManager
         public void Play()
         {
             _isTouchingPlayer = true;
-            _station = true;
+            _station = false;
             animator.SetTrigger("Run");
         }
 
         public void Finish()
         {
             //animator.SetTrigger("Idle");
-            _station = false;
+            _station = true;
         }
 
         public void Reset()
         {
             _isTouchingPlayer = false;
-            _station = false;
+            _station = true;
         }
     }
 }
