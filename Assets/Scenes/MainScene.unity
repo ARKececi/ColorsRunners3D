@@ -408,8 +408,8 @@ MonoBehaviour:
   PoolListObj: []
   MinigameObjList: []
   player: {fileID: 1474950192}
-  PlayerObj: {fileID: 4306058459111000937, guid: 9f1849bd8fa7ac44c807d537dbf9e6dc, type: 3}
-  Pool: {fileID: 1099149083}
+  playerObj: {fileID: 4306058459111000937, guid: 9f1849bd8fa7ac44c807d537dbf9e6dc, type: 3}
+  pool: {fileID: 1099149083}
   MinigamePlatform: {fileID: 1284559123}
 --- !u!114 &372416810
 MonoBehaviour:

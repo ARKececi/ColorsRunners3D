@@ -11,7 +11,7 @@ namespace Controllers.PlayerManager
         {
             if (other.CompareTag("MinigameHelicopter"))
             {
-                DOVirtual.DelayedCall(.7f, ()=>CoreGameSignals.Instance.minigameState?.Invoke("HelicopterMinigame"));
+                
             }
         }
     }

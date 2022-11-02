@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Data.ValueObject;
 using UnityEngine;
 
-namespace Command.StackManager
+namespace Command.StackController
 {
     public class ListChangeCommand
     {

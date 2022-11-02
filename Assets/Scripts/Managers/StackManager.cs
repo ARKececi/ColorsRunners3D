@@ -51,8 +51,8 @@ namespace Managers
         private void MinigameState(string state)
         {
             if (state == "HelicopterMinigame")
-            {
-                StartCoroutine(stackController.HelicopterPlatformStack());
+            { 
+                stackController.HelicopterPlatformStack();
             }
         }
 

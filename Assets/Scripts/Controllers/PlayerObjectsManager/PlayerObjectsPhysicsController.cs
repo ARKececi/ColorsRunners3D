@@ -21,6 +21,11 @@ namespace Controllers.PlayerObjectsManager
             {
                 playerObjectsManager.PlayerColorChange(other.gameObject);
             }
+
+            if (other.CompareTag("MinigameHelicopter"))
+            {
+                playerObjectsManager.PlayersMinigameControl();
+            }
         }
     }
 }

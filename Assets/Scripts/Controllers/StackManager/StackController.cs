@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Command.StackManager;
+using Command.StackController;
 using Data.UnityObject;
 using Data.ValueObject;
 using DG.Tweening;
 using Signals;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Controllers.StackManager
 {
@@ -24,8 +25,8 @@ namespace Controllers.StackManager
         #region Serialized Variables
 
         [SerializeField] private GameObject player;
-        [SerializeField] private GameObject PlayerObj;
-        [SerializeField] private Transform Pool;
+        [SerializeField] private GameObject playerObj;
+        [SerializeField] private Transform pool;
         [SerializeField] private GameObject MinigamePlatform;
 
         #endregion
@@ -37,18 +38,18 @@ namespace Controllers.StackManager
         private void Awake()
         {
             StackData = GetStackData();
-            ListChangeCommand = new ListChangeCommand(ref StackListObj, ref PoolListObj, transform, Pool,
+            ListChangeCommand = new ListChangeCommand(ref StackListObj, ref PoolListObj, transform, pool,
                 player.transform, ref StackData);
         }
 
         private void Start()
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 20; i++)
             {
                 PoolInstantiate();
             }
             
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 20; i++)
             {
                  ListChange(PoolListObj[0], 2);
             }
@@ -78,20 +79,10 @@ namespace Controllers.StackManager
             }
         }
 
-        public IEnumerator HelicopterPlatformStack()
+        public void HelicopterPlatformStack()
         {
-            float ranSec = 0.07f;
-            float boundary = player.transform.position.z;
-            while (StackListObj.Count > 0)
+            if (StackListObj.Count > 0)
             {
-                if (player.transform.position.z < boundary - 3 )
-                {
-                    ranSec = 0.14f;
-                }
-                else if (player.transform.position.z > boundary + 1)
-                {
-                    ranSec = 0.07f;
-                }
                 if (StackListObj.Count != 1)
                 {
                     Transform lastPosition = StackListObj[1].transform;
@@ -100,19 +91,21 @@ namespace Controllers.StackManager
                 var obj = StackListObj[0];
                 MinigameObjList.Add(obj);
                 StackListObj.Remove(obj);
-                
-                yield return new WaitForSeconds(ranSec);
+
+                if (StackListObj.Count == 0)
+                {
+                    CoreGameSignals.Instance.onFinish?.Invoke();
+                    DOVirtual.DelayedCall(1,()=>StackSignals.Instance.onPlatformClose?.Invoke());
+                }
             }
-            CoreGameSignals.Instance.onFinish?.Invoke();
-            StackSignals.Instance.onPlatformClose?.Invoke();
         }
 
         private void PoolInstantiate()
         {
-            GameObject playerObj = Instantiate(PlayerObj);
-            PoolListObj.Add(playerObj);
-            playerObj.transform.SetParent(Pool);
-            playerObj.SetActive(false);
+            GameObject player = Instantiate(playerObj);
+            PoolListObj.Add(player);
+            player.transform.SetParent(pool);
+            player.SetActive(false);
         }
 
         private void ListChange(GameObject obj, int list)

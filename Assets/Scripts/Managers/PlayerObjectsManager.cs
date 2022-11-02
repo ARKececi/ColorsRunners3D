@@ -23,10 +23,37 @@ namespace Managers
         #endregion
 
         #endregion
+        
+        #region Event Subscription
+        private void OnEnable()
+        {
+            SubscribeEvents();
+        }
+
+        private void SubscribeEvents()
+        {
+
+        }
+
+        private void UnsubscribeEvents()
+        {
+            
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+        #endregion
 
         public void PlayerAnimation()
         {
             
+        }
+
+        public void PlayersMinigameControl()
+        {
+            playerObjectsController.MinigameControl();
         }
 
         public void PlayerColorChange(GameObject door)
