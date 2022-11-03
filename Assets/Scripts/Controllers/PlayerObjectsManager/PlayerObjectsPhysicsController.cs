@@ -11,6 +11,7 @@ namespace Controllers.PlayerObjectsManager
         #region Serialized Variables
 
         [SerializeField] private Managers.PlayerObjectsManager playerObjectsManager;
+        [SerializeField] private PlayerObjectsController playerObjectsController;
 
         #endregion
 
@@ -25,6 +26,11 @@ namespace Controllers.PlayerObjectsManager
             if (other.CompareTag("MinigameHelicopter"))
             {
                 playerObjectsManager.PlayersMinigameControl();
+            }
+            
+            if (other.CompareTag("Platform"))
+            {
+                playerObjectsController.PlayerExecution(other.gameObject);
             }
         }
     }

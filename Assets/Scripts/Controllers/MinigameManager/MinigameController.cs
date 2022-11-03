@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Signals;
 using UnityEngine;
 
 namespace Controllers.MinigameManager
@@ -28,7 +29,7 @@ namespace Controllers.MinigameManager
             {
                 if (minigamePlatform.transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
                 {
-                    minigamePlatform.transform.GetChild(i).transform.DOScaleZ(0, 1);
+                    minigamePlatform.transform.GetChild(i).transform.DOScaleZ(0, 1).OnComplete(()=> MinigameSignals.Instance.onPlayExecution?.Invoke());
                     break;
                 }
             }

@@ -1533,7 +1533,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: e61f9676bd3519841a418d0b9ac58a56, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1554,7 +1554,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!65 &1053403465736717039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1566,7 +1566,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &1915552682191318271
 MonoBehaviour:
@@ -1581,7 +1581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObjectsController: {fileID: 1381548645370006978}
-  animator: {fileID: 0}
 --- !u!114 &1381548645370006978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,11 +1593,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0aa68abc4fc4bd6a794b5cba9c61376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: c5df2d3bd4a74334892ca256bd82bd47, type: 2}
   - {fileID: 2100000, guid: 28ac3ab4badfc5942be3a619e9af1061, type: 2}
   - {fileID: 2100000, guid: 26fb41c21e199e6479a7ab7a92bc0902, type: 2}
+  animator: {fileID: 7379655013467753385}
 --- !u!114 &392187371972245243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,6 +1611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObjectsManager: {fileID: 1915552682191318271}
+  playerObjectsController: {fileID: 1381548645370006978}
 --- !u!1 &4429889824181846993
 GameObject:
   m_ObjectHideFlags: 0

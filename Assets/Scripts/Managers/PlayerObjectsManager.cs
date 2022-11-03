@@ -1,4 +1,5 @@
 using Controllers.PlayerObjectsManager;
+using Signals;
 using UnityEngine;
 
 namespace Managers
@@ -14,7 +15,6 @@ namespace Managers
         #region Serialized Variables
 
         [SerializeField] private PlayerObjectsController playerObjectsController;
-        [SerializeField] private Animator animator;
 
         #endregion
 
@@ -32,12 +32,14 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-
+            CoreGameSignals.Instance.onPlayerAnimation += OnPlayerAnimation;
+            MinigameSignals.Instance.onPlayExecution += OnPlayExecution;
         }
 
         private void UnsubscribeEvents()
         {
-            
+            CoreGameSignals.Instance.onPlayerAnimation -= OnPlayerAnimation;
+            MinigameSignals.Instance.onPlayExecution -= OnPlayExecution;
         }
 
         private void OnDisable()
@@ -46,9 +48,9 @@ namespace Managers
         }
         #endregion
 
-        public void PlayerAnimation()
+        private void OnPlayerAnimation(string animation)
         {
-            
+            playerObjectsController.PlayerAnimation(animation);
         }
 
         public void PlayersMinigameControl()
@@ -59,6 +61,11 @@ namespace Managers
         public void PlayerColorChange(GameObject door)
         {
             playerObjectsController.Comparison(door);
+        }
+
+        private void OnPlayExecution()
+        {
+            playerObjectsController.PlayExecution();
         }
     }
 }

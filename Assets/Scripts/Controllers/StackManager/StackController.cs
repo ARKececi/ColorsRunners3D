@@ -108,7 +108,7 @@ namespace Controllers.StackManager
             player.SetActive(false);
         }
 
-        private void ListChange(GameObject obj, int list)
+        public void ListChange(GameObject obj, int list)
         {
             ListChangeCommand.ListChange(obj, list);
         }

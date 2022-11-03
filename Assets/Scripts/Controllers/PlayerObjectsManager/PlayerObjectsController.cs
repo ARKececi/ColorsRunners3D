@@ -27,6 +27,8 @@ namespace Controllers.PlayerObjectsManager
 
         private Material _material;
         private ObjectData _objectData;
+        private GameObject _execution;
+        private Transform _oldTransform;
 
         #endregion
         #endregion
@@ -37,6 +39,8 @@ namespace Controllers.PlayerObjectsManager
         }
 
         private ObjectData GetObjectData(){return Resources.Load<SO_ObjectData>("Data/SO_ObjectData").ObjectData;}
+        
+        public void PlayerExecution(GameObject other){ _execution = other; }
         
         public void Comparison(GameObject door)
         {
@@ -68,26 +72,52 @@ namespace Controllers.PlayerObjectsManager
             {
                 transform.DOMoveX(1.5f, .8f);
             }
-            if (distance >= 6)
+            if (distance >= 7)
             {
                 i = -.5f;
             }
-            else if (distance <= 4)
+            else if (distance <= 2.5f)
             {
                 i = .5f;
             }
             distance += i;
-            transform.DOMoveZ(transform.position.z + distance, 1);
             _objectData.distance = distance;
             _objectData.quantity = i;
+            transform.DOMoveZ(transform.position.z + distance, 1).OnComplete(() => PlayerAnimation("StandingToCrouched"));
         }
 
-        public void Transparent()
+        public void PlayExecution()
         {
-            _material = transform.GetChild(0).GetComponent<Renderer>().material;
-            _material.SetFloat("_Surface", (float)BaseShaderGUI.SurfaceType.Transparent);
-            _material.SetFloat("_Blend", (float)BaseShaderGUI.BlendMode.Alpha);
+            if (transform.GetChild(0).GetComponent<Renderer>().material.name != _execution.GetComponent<Renderer>().material.name ) // renkleri enum ataması yap ve onun üzerinden işlet.
+            {
+                Debug.Log(transform.GetChild(0).GetComponent<Renderer>().material);
+                Debug.Log(_execution.GetComponent<Renderer>().material);
+                PlayerAnimation("Dead");
+            }
+        }
 
+        public void PlayerAnimation(string animation)
+        {
+            if (animation == "Runner")
+            {
+                animator.SetTrigger("Runner");
+            }
+            else if (animation == "Idle")
+            {
+                animator.SetTrigger("Idle");
+            }
+            else if (animation == "StandingToCrouched")
+            {
+                animator.SetTrigger("StandingToCrouched");
+                _oldTransform = transform;
+                transform.DOLocalMoveY(3.35f, .2f);
+            }
+            else if (animation == "Dead")
+            {
+                transform.DOMoveY(_oldTransform.position.y + .4f, .2f);
+                animator.SetTrigger("Dead");
+                transform.DOMoveY(_oldTransform.position.y + .1f, .5f).SetDelay(1);
+            }
         }
     }
 }

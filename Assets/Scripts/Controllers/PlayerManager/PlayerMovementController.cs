@@ -1,6 +1,7 @@
 using Data.UnityObject;
 using Data.ValueObject;
 using Keys;
+using Signals;
 using UnityEngine;
 
 namespace Controllers.PlayerManager
@@ -12,7 +13,6 @@ namespace Controllers.PlayerManager
         #region Serialized Variables
 
         [SerializeField] private Rigidbody move;
-        [SerializeField] private Animator animator;
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace Controllers.PlayerManager
 
         private float _inputSpeed;
         private Vector2 _clamp;
-        private bool _isTouchingPlayer = true;
+        private bool _isTouchingPlayer;
         private bool _station;
 
         #endregion
@@ -32,6 +32,8 @@ namespace Controllers.PlayerManager
         private void Awake()
         {
             _playerData = GetPlayerData();
+            _isTouchingPlayer = false;
+            _station = true;
         }
         
         private PlayerData GetPlayerData()
@@ -71,12 +73,11 @@ namespace Controllers.PlayerManager
         {
             _isTouchingPlayer = true;
             _station = false;
-            animator.SetTrigger("Run");
+            CoreGameSignals.Instance.onPlayerAnimation?.Invoke("Runner");
         }
 
         public void Finish()
         {
-            //animator.SetTrigger("Idle");
             _station = true;
         }
 
