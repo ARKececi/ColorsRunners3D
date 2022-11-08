@@ -30,9 +30,11 @@ namespace Controllers.MinigameManager
                 {
                     minigamePlatform.transform.GetChild(i).transform.DOScaleZ(0, 1).OnComplete(()=> MinigameSignals.Instance.onPlayExecution?.Invoke());
                     DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onStation?.Invoke(false));
+                    DOVirtual.DelayedCall(4.1f, () => MinigameSignals.Instance.onSlowlyStackAdd?.Invoke());
                     break;
                 }
             }
+            
         }
     }
 }

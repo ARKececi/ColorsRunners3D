@@ -34,12 +34,14 @@ namespace Managers
         {
             CoreGameSignals.Instance.onPlayerAnimation += OnPlayerAnimation;
             MinigameSignals.Instance.onPlayExecution += OnPlayExecution;
+            StackSignals.Instance.onMinigameColor += OnMinigameColor;
         }
 
         private void UnsubscribeEvents()
         {
             CoreGameSignals.Instance.onPlayerAnimation -= OnPlayerAnimation;
             MinigameSignals.Instance.onPlayExecution -= OnPlayExecution;
+            StackSignals.Instance.onMinigameColor -= OnMinigameColor;
         }
 
         private void OnDisable()
@@ -66,6 +68,11 @@ namespace Managers
         private void OnPlayExecution()
         {
             playerObjectsController.PlayExecution();
+        }
+
+        private void OnMinigameColor(GameObject gameObject)
+        {
+            playerObjectsController.MinigameColor(gameObject);
         }
     }
 }

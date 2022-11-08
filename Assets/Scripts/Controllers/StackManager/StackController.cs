@@ -19,6 +19,7 @@ namespace Controllers.StackManager
         public List<GameObject> StackListObj;
         public List<GameObject> PoolListObj;
         public List<GameObject> MinigameObjList;
+        public List<GameObject> _slowStack;
         public ListChangeCommand ListChangeCommand;
 
         #endregion
@@ -44,17 +45,18 @@ namespace Controllers.StackManager
 
         private void Start()
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 100; i++)
             {
                 PoolInstantiate();
             }
             
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 6; i++)
             {
                  ListChange(PoolListObj[0], "Stack");
             }
         }
-
+        
+        public void MinigameStackAdd(GameObject obj) { _slowStack.Add(obj); MinigameObjList.Remove(obj);}
         private StackData GetStackData() => Resources.Load<SO_StackData>("Data/SO_StackData").StackData;
 
         public void PositionUpdate()
@@ -100,7 +102,39 @@ namespace Controllers.StackManager
                 }
             }
         }
-        
+
+        public void MinigamePoolAdd(GameObject minigameObj)
+        {
+            ListChangeCommand.ListChange(minigameObj, "Pool");
+            MinigameObjList.Remove(minigameObj);
+        }
+
+        public void StackStriking(int index)
+        {
+            for (int i = 0; i < index; i++)
+            {
+                PoolListObj[i].SetActive(true);
+                StackSignals.Instance.onMinigameColor?.Invoke(_slowStack[0]);
+                PoolListObj[i].GetComponent<Animator>().SetTrigger("StandingToCrouched");// PlayerObjectsController üzerinden yapılacak.
+                PoolListObj[i].transform.SetParent(transform);
+                PoolListObj[i].transform.position = _slowStack[i].transform.position;
+                _slowStack.Add(PoolListObj[i]);
+            }
+        }
+
+        public IEnumerator SlowlyStackAdd()
+        {
+            var index = _slowStack.Count;
+            StackStriking(index);
+            for (int i = 0; i < index + index; i++)
+            {
+                StackListObj.Add(_slowStack[0]);
+                _slowStack[0].GetComponent<Animator>().SetTrigger("Runner"); // PlayerObject üzerinden yapılacak
+                _slowStack.Remove(_slowStack[0]);
+                yield return new WaitForSeconds(.15f);
+            }
+        }
+
         private void PoolInstantiate()
         {
             GameObject player = Instantiate(playerObj);

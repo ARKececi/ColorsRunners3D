@@ -55,7 +55,6 @@ namespace Command.StackController
                         _poolList.Remove(obj);   
                     }
                     _poolList.TrimExcess();
-                    obj.GetComponent<Animator>().SetTrigger("Runner");
                     Vector3 newPos = _player.position;
                     var index = _stackList.Count;
                     newPos.z -= index - (_stackData.StackBetween * index);

@@ -35,12 +35,18 @@ namespace Managers
         {
             PlayerObjectsSignals.Instance.minigameState += MinigameState;
             PlayerObjectsSignals.Instance.onListChange += OnListChange;
+            PlayerObjectsSignals.Instance.onSlowlyStack += OnSlowlyStack;
+            PlayerObjectsSignals.Instance.onMinigamePoolAdd += OnMinigamePoolAdd;
+            MinigameSignals.Instance.onSlowlyStackAdd += OnSlowlyStackAdd;
         }
 
         private void UnsubscribeEvents()
         {
             PlayerObjectsSignals.Instance.minigameState -= MinigameState;
             PlayerObjectsSignals.Instance.onListChange -= OnListChange;
+            PlayerObjectsSignals.Instance.onSlowlyStack -= OnSlowlyStack;
+            PlayerObjectsSignals.Instance.onMinigamePoolAdd += OnMinigamePoolAdd;
+            MinigameSignals.Instance.onSlowlyStackAdd -= OnSlowlyStackAdd;
         }
 
         private void OnDisable()
@@ -67,6 +73,21 @@ namespace Managers
         {
             stackController.PositionUpdate();
             stackController.MoveStack();
+        }
+
+        private void OnSlowlyStack(GameObject gameObject)
+        {
+            stackController.MinigameStackAdd(gameObject);
+        }
+
+        private void OnSlowlyStackAdd()
+        {
+            StartCoroutine(stackController.SlowlyStackAdd());
+        }
+
+        private void OnMinigamePoolAdd(GameObject minigameObj)
+        {
+            stackController.MinigamePoolAdd(minigameObj);
         }
     }
 }

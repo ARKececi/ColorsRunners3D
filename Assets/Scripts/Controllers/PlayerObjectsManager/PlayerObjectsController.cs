@@ -54,6 +54,18 @@ namespace Controllers.PlayerObjectsManager
                 }
             }
         }
+
+        public void MinigameColor(GameObject obj)
+        {
+            for (int i = 0; i < materials.Count; i++)
+            {
+                if (materials[i].color == obj.transform.GetChild(0).GetComponent<Renderer>().material.color)
+                {
+                    Color index = (Color)Enum.Parse(typeof(Color), materials[i].name);
+                    ColorChange(index);
+                }
+            }
+        }
         
         public void ColorChange(Color color)
         {
@@ -93,11 +105,11 @@ namespace Controllers.PlayerObjectsManager
             if (transform.GetChild(0).GetComponent<Renderer>().material.color != _execution.GetComponent<Renderer>().material.color ) // renkleri enum ataması yap ve onun üzerinden işlet.
             {
                 PlayerAnimation("Dead");
-                DOVirtual.DelayedCall(5, ()=>PlayerObjectsSignals.Instance.onListChange?.Invoke(transform.gameObject, "Pool"));
+                DOVirtual.DelayedCall(5, ()=>PlayerObjectsSignals.Instance.onMinigamePoolAdd?.Invoke(transform.gameObject));
             }
             else
             {
-                DOVirtual.DelayedCall(3 , ()=>PlayerObjectsSignals.Instance.onListChange?.Invoke(transform.gameObject, "Stack"));
+                DOVirtual.DelayedCall(3,()=>PlayerObjectsSignals.Instance.onSlowlyStack?.Invoke(transform.gameObject));
             }
         }
 

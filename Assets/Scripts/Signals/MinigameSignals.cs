@@ -7,5 +7,6 @@ namespace Signals
     public class MinigameSignals : MonoSingleton<MinigameSignals>
     {
         public UnityAction onPlayExecution = delegate { };
+        public UnityAction onSlowlyStackAdd = delegate { };
     }
 }
