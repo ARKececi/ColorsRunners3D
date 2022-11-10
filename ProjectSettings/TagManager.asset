@@ -8,6 +8,7 @@ TagManager:
   - MinigameHelicopter
   - Platform
   - PlayerObj
+  - MinigameTarret
   layers:
   - Default
   - TransparentFX

@@ -57,6 +57,7 @@ namespace Controllers.StackManager
         }
         
         public void MinigameStackAdd(GameObject obj) { _slowStack.Add(obj); MinigameObjList.Remove(obj);}
+        public int StackCount(){return StackListObj.Count - 1;}
         private StackData GetStackData() => Resources.Load<SO_StackData>("Data/SO_StackData").StackData;
 
         public void PositionUpdate()
@@ -98,7 +99,8 @@ namespace Controllers.StackManager
                 {
                     CoreGameSignals.Instance.onStation?.Invoke(true);
                     player.transform.position = new Vector3(-1.5f,player.transform.position.y,MinigameObjList[0].transform.position.z);
-                    DOVirtual.DelayedCall(1,()=>StackSignals.Instance.onPlatformClose?.Invoke());
+                    DOVirtual.DelayedCall(1, () => MinigameSignals.Instance.onPlayExecution?.Invoke()); // süre 1 den farklı birşey olduğu zaman stack eklemesi yapmıyor.
+                    DOVirtual.DelayedCall(4.1f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
                 }
             }
         }

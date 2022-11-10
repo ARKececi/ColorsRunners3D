@@ -16,25 +16,27 @@ namespace Controllers.MinigameManager
         #endregion
 
         #region Private variables
+
+        private int _stackCount;
         
         #endregion
 
         #endregion
 
+        private int StackCount() { _stackCount = (int)MinigameSignals.Instance.onStackCount?.Invoke(); return _stackCount;}
         public void Close()
         {
-            for (int i = 0; i < 2; i++)
+            if (StackCount() <= 0)
             {
-                transform.tag = "Untagged";
-                if (minigamePlatform.transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
+                for (int i = 0; i < 2; i++)
                 {
-                    minigamePlatform.transform.GetChild(i).transform.DOScaleZ(0, 1).OnComplete(()=> MinigameSignals.Instance.onPlayExecution?.Invoke());
-                    DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onStation?.Invoke(false));
-                    DOVirtual.DelayedCall(4.1f, () => MinigameSignals.Instance.onSlowlyStackAdd?.Invoke());
-                    break;
+                    if (minigamePlatform.transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
+                    {
+                        transform.GetChild(i).transform.DOScaleZ(0, 1).SetDelay(1.5f);
+                        DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onStation?.Invoke(false));
+                    }
                 }
             }
-            
         }
     }
 }

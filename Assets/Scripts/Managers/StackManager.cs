@@ -9,28 +9,23 @@ namespace Managers
     public class StackManager : MonoBehaviour
     {
         #region Self Variables
-
         #region Serialized Variables
 
         [SerializeField] private StackController stackController;
 
         #endregion
-
         #region Private Variables
 
         private bool _helicopterMinigame;
 
         #endregion
-
         #endregion
         
         #region Event Subscription
-
         private void OnEnable()
         {
             SubscribeEvents();
         }
-
         private void SubscribeEvents()
         {
             PlayerObjectsSignals.Instance.minigameState += MinigameState;
@@ -38,17 +33,17 @@ namespace Managers
             PlayerObjectsSignals.Instance.onSlowlyStack += OnSlowlyStack;
             PlayerObjectsSignals.Instance.onMinigamePoolAdd += OnMinigamePoolAdd;
             MinigameSignals.Instance.onSlowlyStackAdd += OnSlowlyStackAdd;
+            MinigameSignals.Instance.onStackCount += OnStackCount;
         }
-
         private void UnsubscribeEvents()
         {
             PlayerObjectsSignals.Instance.minigameState -= MinigameState;
             PlayerObjectsSignals.Instance.onListChange -= OnListChange;
             PlayerObjectsSignals.Instance.onSlowlyStack -= OnSlowlyStack;
-            PlayerObjectsSignals.Instance.onMinigamePoolAdd += OnMinigamePoolAdd;
+            PlayerObjectsSignals.Instance.onMinigamePoolAdd -= OnMinigamePoolAdd;
             MinigameSignals.Instance.onSlowlyStackAdd -= OnSlowlyStackAdd;
+            MinigameSignals.Instance.onStackCount -= OnStackCount;
         }
-
         private void OnDisable()
         {
             UnsubscribeEvents();
@@ -63,31 +58,31 @@ namespace Managers
                 stackController.HelicopterPlatformStack();
             }
         }
-
         private void OnListChange(GameObject obj, string name)
         {
             stackController.ListChange(obj, name);
         }
-
         private void FixedUpdate()
         {
             stackController.PositionUpdate();
             stackController.MoveStack();
         }
-
         private void OnSlowlyStack(GameObject gameObject)
         {
             stackController.MinigameStackAdd(gameObject);
         }
-
         private void OnSlowlyStackAdd()
         {
             StartCoroutine(stackController.SlowlyStackAdd());
         }
-
         private void OnMinigamePoolAdd(GameObject minigameObj)
         {
             stackController.MinigamePoolAdd(minigameObj);
+        }
+
+        private int OnStackCount()
+        {
+           return stackController.StackCount();
         }
     }
 }

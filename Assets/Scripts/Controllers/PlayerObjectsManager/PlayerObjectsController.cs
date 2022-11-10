@@ -104,7 +104,7 @@ namespace Controllers.PlayerObjectsManager
         {
             if (transform.GetChild(0).GetComponent<Renderer>().material.color != _execution.GetComponent<Renderer>().material.color ) // renkleri enum ataması yap ve onun üzerinden işlet.
             {
-                PlayerAnimation("Dead");
+                DOVirtual.DelayedCall(2, () => PlayerAnimation("Dead"));
                 DOVirtual.DelayedCall(5, ()=>PlayerObjectsSignals.Instance.onMinigamePoolAdd?.Invoke(transform.gameObject));
             }
             else
