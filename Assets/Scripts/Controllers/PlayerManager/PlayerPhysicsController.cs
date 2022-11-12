@@ -7,11 +7,20 @@ namespace Controllers.PlayerManager
 {
     public class PlayerPhysicsController : MonoBehaviour
     {
+        #region Self Varibles
+
+        #region Serialized Variables
+
+        [SerializeField] private PlayerMovementController playerMovementController;
+
+        #endregion
+
+        #endregion
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("MinigameHelicopter"))
+            if (other.CompareTag("MinigameTarret"))
             {
-                
+                playerMovementController.SlowMove();
             }
         }
     }

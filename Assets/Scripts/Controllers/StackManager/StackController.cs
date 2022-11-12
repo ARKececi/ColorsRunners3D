@@ -111,7 +111,17 @@ namespace Controllers.StackManager
             MinigameObjList.Remove(minigameObj);
         }
 
-        public void StackStriking(int index)
+        public void StackStriking()
+        {
+            var count = StackListObj.Count;
+            for (int i = 0; i < count; i++)
+            {
+                ListChange(PoolListObj[0], "Stack");
+            }
+            StackSignals.Instance.onMinigameColor?.Invoke(StackListObj[0]);
+        }
+
+        public void SlowStackStriking(int index)
         {
             for (int i = 0; i < index; i++)
             {
@@ -121,13 +131,14 @@ namespace Controllers.StackManager
                 PoolListObj[i].transform.SetParent(transform);
                 PoolListObj[i].transform.position = _slowStack[i].transform.position;
                 _slowStack.Add(PoolListObj[i]);
+                PoolListObj.Remove(PoolListObj[i]);
             }
         }
 
         public IEnumerator SlowlyStackAdd()
         {
             var index = _slowStack.Count;
-            StackStriking(index);
+            SlowStackStriking(index);
             for (int i = 0; i < index + index; i++)
             {
                 StackListObj.Add(_slowStack[0]);

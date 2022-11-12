@@ -32,14 +32,14 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.onPlayerAnimation += OnPlayerAnimation;
+            PlayerSignals.Instance.onPlayerAnimation += OnPlayerAnimation;
             MinigameSignals.Instance.onPlayExecution += OnPlayExecution;
             StackSignals.Instance.onMinigameColor += OnMinigameColor;
         }
 
         private void UnsubscribeEvents()
         {
-            CoreGameSignals.Instance.onPlayerAnimation -= OnPlayerAnimation;
+            PlayerSignals.Instance.onPlayerAnimation -= OnPlayerAnimation;
             MinigameSignals.Instance.onPlayExecution -= OnPlayExecution;
             StackSignals.Instance.onMinigameColor -= OnMinigameColor;
         }

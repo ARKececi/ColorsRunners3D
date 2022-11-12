@@ -11,6 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2c1c7827dc894353bd32e2d65867a7af564db0/de/fa8a99e6/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d95181a5c71a4ad88c81e8fccee6b47113ce00/73/50df92e3/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d95181a5c71a4ad88c81e8fccee6b47113ce00/77/a6999190/Renderer.cs" root0="SKIP_HIGHLIGHTING" />
@@ -124,6 +125,8 @@
       <workItem from="1668061404571" duration="11699000" />
       <workItem from="1668096690192" duration="3598000" />
       <workItem from="1668109284561" duration="2472000" />
+      <workItem from="1668151233031" duration="10181000" />
+      <workItem from="1668246003073" duration="12219000" />
     </task>
     <servers />
   </component>

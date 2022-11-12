@@ -13,7 +13,6 @@ namespace Controllers.PlayerObjectsManager
         [SerializeField] private PlayerObjectsController playerObjectsController;
 
         #endregion
-
         #region Private Variables
         #endregion
         #endregion
@@ -32,6 +31,11 @@ namespace Controllers.PlayerObjectsManager
             if (other.CompareTag("Platform"))
             {
                 playerObjectsController.PlayerExecution(other.gameObject);
+            }
+
+            if (other.CompareTag("MinigameTarret"))
+            {
+                playerObjectsController.MinigameAnimationChange();
             }
         }
     }

@@ -9,13 +9,11 @@ namespace Controllers.PlayerManager
     public class PlayerMovementController : MonoBehaviour
     {
         #region Self Variables
-
         #region Serialized Variables
 
         [SerializeField] private Rigidbody move;
 
         #endregion
-
         #region Private Variables
 
         [Header("Data")] private PlayerData _playerData;
@@ -26,7 +24,6 @@ namespace Controllers.PlayerManager
         private bool _station;
 
         #endregion
-
         #endregion
 
         private void Awake()
@@ -73,12 +70,27 @@ namespace Controllers.PlayerManager
         {
             _station = variable;
         }
+
+        public void SlowMove(){
+            
+            switch (_playerData.MoveSpeed)
+            {
+                case 10:
+                    _playerData.MoveSpeed = 5;
+                    break;
+                case 5:
+                    PlayerSignals.Instance.onStackStriking?.Invoke();
+                    PlayerSignals.Instance.onPlayerAnimation?.Invoke("CrouchedWalking");
+                    _playerData.MoveSpeed = 10;
+                    break;
+            }
+        }
         
         public void Play()
         {
             _isTouchingPlayer = true;
             _station = false;
-            CoreGameSignals.Instance.onPlayerAnimation?.Invoke("Runner");
+            PlayerSignals.Instance.onPlayerAnimation?.Invoke("Runner");
         }
 
         public void Finish()

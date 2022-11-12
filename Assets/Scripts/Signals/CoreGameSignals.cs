@@ -12,6 +12,6 @@ namespace Signals
         public UnityAction<bool> onStation = delegate { };
         
         public UnityAction<string> minigameState = delegate { };
-        public UnityAction<string> onPlayerAnimation = delegate { };
+        
     }
 }

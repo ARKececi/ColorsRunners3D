@@ -34,6 +34,7 @@ namespace Managers
             PlayerObjectsSignals.Instance.onMinigamePoolAdd += OnMinigamePoolAdd;
             MinigameSignals.Instance.onSlowlyStackAdd += OnSlowlyStackAdd;
             MinigameSignals.Instance.onStackCount += OnStackCount;
+            PlayerSignals.Instance.onStackStriking += OnStackStriking;
         }
         private void UnsubscribeEvents()
         {
@@ -43,6 +44,7 @@ namespace Managers
             PlayerObjectsSignals.Instance.onMinigamePoolAdd -= OnMinigamePoolAdd;
             MinigameSignals.Instance.onSlowlyStackAdd -= OnSlowlyStackAdd;
             MinigameSignals.Instance.onStackCount -= OnStackCount;
+            PlayerSignals.Instance.onStackStriking += OnStackStriking;
         }
         private void OnDisable()
         {
@@ -83,6 +85,11 @@ namespace Managers
         private int OnStackCount()
         {
            return stackController.StackCount();
+        }
+
+        private void OnStackStriking()
+        {
+            stackController.StackStriking();
         }
     }
 }

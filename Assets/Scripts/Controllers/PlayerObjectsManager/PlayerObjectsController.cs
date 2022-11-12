@@ -27,6 +27,7 @@ namespace Controllers.PlayerObjectsManager
         
         private ObjectData _objectData;
         private ColorData _colorData;
+        private PlayerData _playerData;
         private GameObject _execution;
         private Transform _oldTransform;
 
@@ -37,11 +38,13 @@ namespace Controllers.PlayerObjectsManager
         {
             _objectData = GetObjectData();
             _colorData = GetColorData();
+            _playerData = GetPlayerData();
             materials = _colorData.Colors;
         }
 
         private ObjectData GetObjectData(){return Resources.Load<SO_ObjectData>("Data/SO_ObjectData").ObjectData;}
         private ColorData GetColorData(){return Resources.Load<SO_ColorData>("Data/SO_ColorData").ColorData;}
+        private PlayerData GetPlayerData(){return Resources.Load<SO_PlayerData>("Data/SO_PlayerData").PlayerData;}
         public void PlayerExecution(GameObject other){ _execution = other; }
         public void Comparison(GameObject door)
         {
@@ -71,6 +74,18 @@ namespace Controllers.PlayerObjectsManager
         {
             Material material = materials[(int)color];
             transform.GetChild(0).GetComponent<Renderer>().material = material;
+        }
+
+        public void MinigameAnimationChange()
+        {
+            if (_playerData.MoveSpeed == 5)
+            {
+                PlayerAnimation("CrouchedWalking");
+            }
+            else if (_playerData.MoveSpeed == 10)
+            {
+                PlayerAnimation("Runner");
+            }
         }
 
         public void MinigameControl()
@@ -134,6 +149,10 @@ namespace Controllers.PlayerObjectsManager
                 transform.DOMoveY(_oldTransform.position.y + .4f, .2f);
                 animator.SetTrigger("Dead");
                 transform.DOMoveY(_oldTransform.position.y + .1f, .5f).SetDelay(1);
+            }
+            else if (animation == "CrouchedWalking")
+            {
+                animator.SetTrigger("CrouchedWalking");
             }
         }
     }
