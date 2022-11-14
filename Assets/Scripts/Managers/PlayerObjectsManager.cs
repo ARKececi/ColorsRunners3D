@@ -33,14 +33,14 @@ namespace Managers
         private void SubscribeEvents()
         {
             PlayerSignals.Instance.onPlayerAnimation += OnPlayerAnimation;
-            MinigameSignals.Instance.onPlayExecution += OnPlayExecution;
+            MinigameSignals.Instance.onPlayHelicopterExecution += OnPlayHelicopterExecution;
             StackSignals.Instance.onMinigameColor += OnMinigameColor;
         }
 
         private void UnsubscribeEvents()
         {
             PlayerSignals.Instance.onPlayerAnimation -= OnPlayerAnimation;
-            MinigameSignals.Instance.onPlayExecution -= OnPlayExecution;
+            MinigameSignals.Instance.onPlayHelicopterExecution -= OnPlayHelicopterExecution;
             StackSignals.Instance.onMinigameColor -= OnMinigameColor;
         }
 
@@ -65,9 +65,9 @@ namespace Managers
             playerObjectsController.Comparison(door);
         }
 
-        private void OnPlayExecution()
+        private void OnPlayHelicopterExecution()
         {
-            playerObjectsController.PlayExecution();
+            playerObjectsController.PlayHelicopterExecution();
         }
 
         private void OnMinigameColor(GameObject gameObject)

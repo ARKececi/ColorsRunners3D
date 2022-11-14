@@ -37,6 +37,11 @@ namespace Controllers.PlayerObjectsManager
             {
                 playerObjectsController.MinigameAnimationChange();
             }
+
+            if (other.CompareTag("Bullet"))
+            {
+                playerObjectsController.PlayExecution(transform.gameObject);
+            }
         }
     }
 }

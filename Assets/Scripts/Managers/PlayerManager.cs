@@ -15,6 +15,12 @@ namespace Managers
 
         #endregion
 
+        #region Private Variables
+
+        private GameObject _platform;
+
+        #endregion
+
         #endregion
         
         #region Event Subscription
@@ -73,5 +79,6 @@ namespace Managers
         {
             playerMovementController.movementcontroller(horizontalInputParams);
         }
+        
     }
 }

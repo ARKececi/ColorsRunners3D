@@ -35,6 +35,7 @@ namespace Managers
             MinigameSignals.Instance.onSlowlyStackAdd += OnSlowlyStackAdd;
             MinigameSignals.Instance.onStackCount += OnStackCount;
             PlayerSignals.Instance.onStackStriking += OnStackStriking;
+            MinigameSignals.Instance.onTarretSetObj += OnTarretSetlist;
         }
         private void UnsubscribeEvents()
         {
@@ -45,6 +46,7 @@ namespace Managers
             MinigameSignals.Instance.onSlowlyStackAdd -= OnSlowlyStackAdd;
             MinigameSignals.Instance.onStackCount -= OnStackCount;
             PlayerSignals.Instance.onStackStriking += OnStackStriking;
+            MinigameSignals.Instance.onTarretSetObj += OnTarretSetlist;
         }
         private void OnDisable()
         {
@@ -90,6 +92,11 @@ namespace Managers
         private void OnStackStriking()
         {
             stackController.StackStriking();
+        }
+
+        private GameObject OnTarretSetlist()
+        {
+            return stackController.TarretSetObj();
         }
     }
 }

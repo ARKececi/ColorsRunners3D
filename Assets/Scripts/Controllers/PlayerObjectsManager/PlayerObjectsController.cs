@@ -115,7 +115,12 @@ namespace Controllers.PlayerObjectsManager
             transform.DOMoveZ(transform.position.z + distance, 1).OnComplete(() => PlayerAnimation("StandingToCrouched"));
         }
 
-        public void PlayExecution()
+        public void PlayExecution(GameObject gameObject)
+        {
+            PlayerAnimation("Dead");
+            DOVirtual.DelayedCall(2,()=>PlayerObjectsSignals.Instance.onListChange?.Invoke(gameObject, "Pool"));
+        }
+        public void PlayHelicopterExecution()
         {
             if (transform.GetChild(0).GetComponent<Renderer>().material.color != _execution.GetComponent<Renderer>().material.color ) // renkleri enum ataması yap ve onun üzerinden işlet.
             {

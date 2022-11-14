@@ -7,13 +7,11 @@ namespace Controllers.MinigameManager
     public class MinigamePhysicsController : MonoBehaviour
     {
         #region Self Variables
-
         #region Serialized Variables
 
         [SerializeField] private MinigameController minigameController;
 
         #endregion
-
         #endregion
         private void OnTriggerEnter(Collider other)
         {

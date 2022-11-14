@@ -9,6 +9,8 @@ TagManager:
   - Platform
   - PlayerObj
   - MinigameTarret
+  - Bullet
+  - TarretPlatform
   layers:
   - Default
   - TransparentFX

@@ -33,6 +33,7 @@ namespace Controllers.StackManager
         #endregion
         #region Private Variables
 
+        private GameObject _platform;
         #endregion
         #endregion
 
@@ -99,7 +100,7 @@ namespace Controllers.StackManager
                 {
                     CoreGameSignals.Instance.onStation?.Invoke(true);
                     player.transform.position = new Vector3(-1.5f,player.transform.position.y,MinigameObjList[0].transform.position.z);
-                    DOVirtual.DelayedCall(1, () => MinigameSignals.Instance.onPlayExecution?.Invoke()); // süre 1 den farklı birşey olduğu zaman stack eklemesi yapmıyor.
+                    DOVirtual.DelayedCall(1, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke()); // süre 1 den farklı birşey olduğu zaman stack eklemesi yapmıyor.
                     DOVirtual.DelayedCall(4.1f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
                 }
             }
@@ -159,6 +160,11 @@ namespace Controllers.StackManager
         public void ListChange(GameObject obj, string listName)
         {
             ListChangeCommand.ListChange(obj, listName);
+        }
+
+        public GameObject TarretSetObj()
+        {
+            return StackListObj[0];
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections;
+using Cinemachine;
 using DG.Tweening;
 using Signals;
 using UnityEngine;
@@ -7,20 +9,20 @@ namespace Controllers.MinigameManager
     public class MinigameController : MonoBehaviour
     {
         #region Self Variables
-
         #region Serialized Variables
 
         [SerializeField] private GameObject minigamePlatform;
         [SerializeField] private GameObject door;
+        [SerializeField] private CinemachineVirtualCamera rightTarret;
+        [SerializeField] private CinemachineVirtualCamera leftTarret;
 
         #endregion
-
         #region Private variables
 
         private int _stackCount;
+        private GameObject _platform;
         
         #endregion
-
         #endregion
 
         private int StackCount() { _stackCount = (int)MinigameSignals.Instance.onStackCount?.Invoke(); return _stackCount;}
@@ -36,6 +38,25 @@ namespace Controllers.MinigameManager
                         DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onStation?.Invoke(false));
                     }
                 }
+            }
+        }
+
+        public void Platform(GameObject platform)
+        {
+            _platform = platform;
+        }
+
+        public IEnumerator TargetMinigame()
+        {
+            while (true)
+            {
+                var obj = MinigameSignals.Instance.onTarretSetObj?.Invoke(); // aynı anda atama yapıldığı için null referans veriyor.
+                if (_platform.GetComponent<Renderer>().material.color != obj.transform.GetChild(0).GetComponent<Renderer>().material.color)
+                {
+                    rightTarret.LookAt = obj.transform;
+                    leftTarret.LookAt = obj.transform;
+                }
+                yield return new WaitForSeconds(.15f);
             }
         }
     }

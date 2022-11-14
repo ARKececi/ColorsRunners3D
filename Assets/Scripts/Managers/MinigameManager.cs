@@ -26,11 +26,15 @@ namespace Managers
         private void SubscribeEvents()
         {
             StackSignals.Instance.onPlatformClose += OnPlatformClose;
+            PlayerSignals.Instance.onPlatform += OnPlatform;
+            PlayerSignals.Instance.onTarretMinigame += OnTarretMinigame;
         }
 
         private void UnsubscribeEvents()
         {
             StackSignals.Instance.onPlatformClose -= OnPlatformClose;
+            PlayerSignals.Instance.onPlatform -= OnPlatform;
+            PlayerSignals.Instance.onTarretMinigame += OnTarretMinigame;
         }
 
         private void OnDisable()
@@ -43,6 +47,15 @@ namespace Managers
         {
             _minigameController.Close();
         }
-        
+
+        private void OnPlatform(GameObject obj)
+        {
+            _minigameController.Platform(obj);
+        }
+
+        private void OnTarretMinigame()
+        {
+            StartCoroutine(_minigameController.TargetMinigame());
+        }
     }
 }
