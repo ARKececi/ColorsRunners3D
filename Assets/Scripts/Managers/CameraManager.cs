@@ -10,6 +10,7 @@ namespace Managers
 
         #region Serialized Variables
 
+        [SerializeField] private Animator animator;
         [SerializeField] private CinemachineStateDrivenCamera vmStateCamera;
         [SerializeField] private GameObject player;
 
@@ -25,6 +26,7 @@ namespace Managers
         private void OnSetCamera()
         {
             vmStateCamera.Follow = player.transform;
+            animator.SetTrigger("Runner");
         }
     }
 }

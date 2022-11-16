@@ -8,13 +8,12 @@ namespace Managers
     public class MinigameManager : MonoBehaviour
     {
         #region Self Variables
-
         #region Serialized Variables
 
-        [SerializeField] private MinigameController _minigameController;
+        [SerializeField] private TarretMinigameController _minigameController;
+        [SerializeField] private HelicopterMinigameController helicopterMinigameController;
 
         #endregion
-
         #endregion
         
         #region Event Subscription
@@ -25,16 +24,16 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            StackSignals.Instance.onPlatformClose += OnPlatformClose;
+            PlayerSignals.Instance.onPlatformClose += OnPlatformClose;
             PlayerSignals.Instance.onPlatform += OnPlatform;
             PlayerSignals.Instance.onTarretMinigame += OnTarretMinigame;
         }
 
         private void UnsubscribeEvents()
         {
-            StackSignals.Instance.onPlatformClose -= OnPlatformClose;
+            PlayerSignals.Instance.onPlatformClose -= OnPlatformClose;
             PlayerSignals.Instance.onPlatform -= OnPlatform;
-            PlayerSignals.Instance.onTarretMinigame += OnTarretMinigame;
+            PlayerSignals.Instance.onTarretMinigame -= OnTarretMinigame;
         }
 
         private void OnDisable()
@@ -45,7 +44,7 @@ namespace Managers
         
         private void OnPlatformClose()
         {
-            _minigameController.Close();
+            helicopterMinigameController.Close();
         }
 
         private void OnPlatform(GameObject obj)
@@ -55,7 +54,7 @@ namespace Managers
 
         private void OnTarretMinigame()
         {
-            StartCoroutine(_minigameController.TargetMinigame());
+            StartCoroutine(_minigameController.TargetLook());
         }
     }
 }

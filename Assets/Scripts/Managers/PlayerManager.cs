@@ -37,6 +37,7 @@ namespace Managers
             CoreGameSignals.Instance.onPlay += OnPlay;
             CoreGameSignals.Instance.onFinish += OnFinish;
             CoreGameSignals.Instance.onStation += OnStation;
+            MinigameSignals.Instance.onSlowMove += OnSlowMove;
         }
 
         private void UnsubscribeEvents()
@@ -46,6 +47,7 @@ namespace Managers
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onFinish -= OnFinish;
             CoreGameSignals.Instance.onStation += OnStation;
+            MinigameSignals.Instance.onSlowMove -= OnSlowMove;
         }
 
         private void OnDisable()
@@ -79,6 +81,10 @@ namespace Managers
         {
             playerMovementController.movementcontroller(horizontalInputParams);
         }
-        
+
+        private void OnSlowMove()
+        {
+            playerMovementController.SlowMove();
+        }
     }
 }

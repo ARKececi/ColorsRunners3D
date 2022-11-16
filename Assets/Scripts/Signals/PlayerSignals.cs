@@ -10,5 +10,6 @@ namespace Signals
         public UnityAction onStackStriking = delegate { };
         public UnityAction<GameObject> onPlatform = delegate { };
         public UnityAction onTarretMinigame = delegate { };
+        public UnityAction onPlatformClose = delegate { };
     }
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Controllers.MinigameManager
 {
-    public class MinigamePhysicsController : MonoBehaviour
+    public class HelicopterMinigamePhysicsController : MonoBehaviour
     {
         #region Self Variables
         #region Serialized Variables
-
-        [SerializeField] private MinigameController minigameController;
+        
+        [SerializeField] private HelicopterMinigameController helicopterMinigameController;
 
         #endregion
         #endregion
@@ -19,7 +19,7 @@ namespace Controllers.MinigameManager
             {
                 if (other.CompareTag("PlayerObj"))
                 {
-                    minigameController.Close();
+                    helicopterMinigameController.Close();
                 }
             }
         }

@@ -3,18 +3,20 @@ using Cinemachine;
 using DG.Tweening;
 using Signals;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Controllers.MinigameManager
 {
-    public class MinigameController : MonoBehaviour
+    public class TarretMinigameController : MonoBehaviour
     {
         #region Self Variables
         #region Serialized Variables
 
         [SerializeField] private GameObject minigamePlatform;
         [SerializeField] private GameObject door;
-        [SerializeField] private CinemachineVirtualCamera rightTarret;
-        [SerializeField] private CinemachineVirtualCamera leftTarret;
+        [SerializeField] private GameObject rightTarret;
+        [SerializeField] private GameObject leftTarret;
+        [SerializeField] private GameObject bullet;
 
         #endregion
         #region Private variables
@@ -32,7 +34,7 @@ namespace Controllers.MinigameManager
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    if (minigamePlatform.transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
+                    if (transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
                     {
                         transform.GetChild(i).transform.DOScaleZ(0, 1).SetDelay(1.5f);
                         DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onStation?.Invoke(false));
@@ -46,17 +48,31 @@ namespace Controllers.MinigameManager
             _platform = platform;
         }
 
-        public IEnumerator TargetMinigame()
+        public void TargetStartLook()
+        {
+            StartCoroutine(TargetLook());
+        }
+
+        public IEnumerator TargetLook()
         {
             while (true)
             {
                 var obj = MinigameSignals.Instance.onTarretSetObj?.Invoke(); // aynı anda atama yapıldığı için null referans veriyor.
                 if (_platform.GetComponent<Renderer>().material.color != obj.transform.GetChild(0).GetComponent<Renderer>().material.color)
                 {
-                    rightTarret.LookAt = obj.transform;
-                    leftTarret.LookAt = obj.transform;
+                    rightTarret.transform.LookAt(obj.transform);
+                    leftTarret.transform.LookAt(obj.transform);
                 }
-                yield return new WaitForSeconds(.15f);
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
+        public IEnumerator TargetFire()
+        {
+            while (true)
+            {
+                
+                yield return new WaitForSeconds(.5f);
             }
         }
     }

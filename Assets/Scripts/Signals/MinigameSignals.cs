@@ -11,5 +11,6 @@ namespace Signals
         public UnityAction onSlowlyStackAdd = delegate { };
         public Func<int> onStackCount = delegate { return new int();};
         public Func<GameObject> onTarretSetObj = delegate { return new GameObject();};
+        public UnityAction onSlowMove = delegate { };
     }
 }
