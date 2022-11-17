@@ -12,5 +12,6 @@ namespace Signals
         public UnityAction<GameObject, string> onListChange = delegate { };
         public UnityAction<GameObject> onMinigamePoolAdd = delegate { };
         public UnityAction<GameObject> onSlowlyStack = delegate { };
+        public UnityAction<GameObject> onMinigameAdd = delegate { };
     }
 }

@@ -13,6 +13,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2c1c7827dc894353bd32e2d65867a7af564db0/de/fa8a99e6/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4fde398772134227852dc037ed8ddb3b18200/89/551b4a68/Rigidbody.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d95181a5c71a4ad88c81e8fccee6b47113ce00/73/50df92e3/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d95181a5c71a4ad88c81e8fccee6b47113ce00/77/a6999190/Renderer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d95181a5c71a4ad88c81e8fccee6b47113ce00/be/8327a155/Transform.cs" root0="SKIP_HIGHLIGHTING" />
@@ -133,6 +134,8 @@
       <workItem from="1668530327619" duration="2558000" />
       <workItem from="1668581431620" duration="5717000" />
       <workItem from="1668615090668" duration="8269000" />
+      <workItem from="1668673877107" duration="11624000" />
+      <workItem from="1668707852640" duration="4506000" />
     </task>
     <servers />
   </component>

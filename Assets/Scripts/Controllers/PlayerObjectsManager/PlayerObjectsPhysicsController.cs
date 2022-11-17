@@ -14,6 +14,8 @@ namespace Controllers.PlayerObjectsManager
 
         #endregion
         #region Private Variables
+
+        private bool _bullet;
         #endregion
         #endregion
         private void OnTriggerEnter(Collider other)
@@ -40,7 +42,12 @@ namespace Controllers.PlayerObjectsManager
 
             if (other.CompareTag("Bullet"))
             {
-                playerObjectsController.PlayExecution(transform.gameObject);
+                if (_bullet != true)
+                {
+                    playerObjectsController.PlayExecution(transform.gameObject);
+                    playerObjectsController.Bullet();
+                }
+                _bullet = true;
             }
         }
     }

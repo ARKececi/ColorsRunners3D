@@ -28,7 +28,6 @@ namespace Controllers.StackManager
         [SerializeField] private GameObject player;
         [SerializeField] private GameObject playerObj;
         [SerializeField] private Transform pool;
-        [SerializeField] private GameObject minigameplatform;
 
         #endregion
         #region Private Variables
@@ -104,6 +103,13 @@ namespace Controllers.StackManager
                     DOVirtual.DelayedCall(4.1f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
                 }
             }
+        }
+
+        public void MinigameAdd(GameObject obj)
+        {
+            MinigameObjList.Add(obj);
+            StackListObj.Remove(obj);
+            StackListObj.TrimExcess();
         }
 
         public void MinigamePoolAdd(GameObject minigameObj)

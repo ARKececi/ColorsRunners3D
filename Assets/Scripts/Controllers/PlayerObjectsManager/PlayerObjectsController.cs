@@ -30,6 +30,7 @@ namespace Controllers.PlayerObjectsManager
         private PlayerData _playerData;
         private GameObject _execution;
         private Transform _oldTransform;
+        private bool _bullet;
 
         #endregion
         #endregion
@@ -78,7 +79,7 @@ namespace Controllers.PlayerObjectsManager
 
         public void MinigameAnimationChange()
         {
-            if (_playerData.MoveSpeed == 5)
+            if (_playerData.MoveSpeed == 3)
             {
                 PlayerAnimation("CrouchedWalking");
             }
@@ -114,17 +115,24 @@ namespace Controllers.PlayerObjectsManager
             _objectData.quantity = i;
             transform.DOMoveZ(transform.position.z + distance, 1).OnComplete(() => PlayerAnimation("StandingToCrouched"));
         }
+        public  void Bullet(){ _bullet = true;}
 
         public void PlayExecution(GameObject gameObject)
         {
-            PlayerAnimation("Dead");
-            DOVirtual.DelayedCall(2,()=>PlayerObjectsSignals.Instance.onListChange?.Invoke(gameObject, "Pool"));
+            if (_bullet != true)
+            {
+                PlayerObjectsSignals.Instance.onMinigameAdd?.Invoke(transform.gameObject);
+                PlayerAnimation("Dead");
+                DOVirtual.DelayedCall(5,()=>PlayerObjectsSignals.Instance.onListChange?.Invoke(gameObject, "Pool"));
+            }
         }
         public void PlayHelicopterExecution()
         {
             if (transform.GetChild(0).GetComponent<Renderer>().material.color != _execution.GetComponent<Renderer>().material.color ) // renkleri enum ataması yap ve onun üzerinden işlet.
             {
-                DOVirtual.DelayedCall(2, () => PlayerAnimation("Dead"));
+                transform.DOMoveY(_oldTransform.position.y + .4f, .2f);
+                animator.SetTrigger("Dead");
+                transform.DOMoveY(_oldTransform.position.y + .1f, .5f).SetDelay(1);
                 DOVirtual.DelayedCall(5, ()=>PlayerObjectsSignals.Instance.onMinigamePoolAdd?.Invoke(transform.gameObject));
             }
             else
@@ -151,9 +159,7 @@ namespace Controllers.PlayerObjectsManager
             }
             else if (animation == "Dead")
             {
-                transform.DOMoveY(_oldTransform.position.y + .4f, .2f);
                 animator.SetTrigger("Dead");
-                transform.DOMoveY(_oldTransform.position.y + .1f, .5f).SetDelay(1);
             }
             else if (animation == "CrouchedWalking")
             {

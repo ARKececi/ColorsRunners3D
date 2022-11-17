@@ -76,11 +76,10 @@ namespace Controllers.PlayerManager
             switch (_playerData.MoveSpeed)
             {
                 case 10:
-                    _playerData.MoveSpeed = 5;
+                    _playerData.MoveSpeed = 3;
                     break;
-                case 5:
+                case 3:
                     PlayerSignals.Instance.onStackStriking?.Invoke();
-                    PlayerSignals.Instance.onPlayerAnimation?.Invoke("CrouchedWalking");
                     _playerData.MoveSpeed = 10;
                     break;
             }
