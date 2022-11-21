@@ -137,7 +137,7 @@ namespace Controllers.PlayerObjectsManager
             }
             else
             {
-                DOVirtual.DelayedCall(3,()=>PlayerObjectsSignals.Instance.onSlowlyStack?.Invoke(transform.gameObject));
+                PlayerObjectsSignals.Instance.onSlowlyStack?.Invoke(transform.gameObject);
             }
         }
 

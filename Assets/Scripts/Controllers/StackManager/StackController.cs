@@ -99,8 +99,8 @@ namespace Controllers.StackManager
                 {
                     CoreGameSignals.Instance.onStation?.Invoke(true);
                     player.transform.position = new Vector3(-1.5f,player.transform.position.y,MinigameObjList[0].transform.position.z);
-                    DOVirtual.DelayedCall(1, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke()); // süre 1 den farklı birşey olduğu zaman stack eklemesi yapmıyor.
-                    DOVirtual.DelayedCall(4.1f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
+                    DOVirtual.DelayedCall(4, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke()); 
+                    DOVirtual.DelayedCall(5.5f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
                 }
             }
         }
@@ -146,6 +146,7 @@ namespace Controllers.StackManager
         {
             var index = _slowStack.Count;
             SlowStackStriking(index);
+            CoreGameSignals.Instance.onStation?.Invoke(false);
             for (int i = 0; i < index + index; i++)
             {
                 StackListObj.Add(_slowStack[0]);

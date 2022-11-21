@@ -6,7 +6,7 @@ namespace Controllers
     {
         public void BulletDestroy()
         {
-            Destroy(transform.gameObject);
+            transform.gameObject.SetActive(false);
         }
     }
 }

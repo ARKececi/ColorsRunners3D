@@ -30,7 +30,6 @@ namespace Controllers.MinigameManager
                     if (transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
                     {
                         transform.GetChild(i).transform.DOScaleZ(0, 1).SetDelay(1.5f);
-                        DOVirtual.DelayedCall(4, () => CoreGameSignals.Instance.onStation?.Invoke(false));
                     }
                 }
             }
