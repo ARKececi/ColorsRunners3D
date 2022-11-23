@@ -9,9 +9,9 @@ namespace Controllers.PlayerManager
     {
         #region Self Varibles
         #region Serialized Variables
-        
-        #endregion
-        #endregion
 
+        #endregion
+        #endregion
+        
     }
 }

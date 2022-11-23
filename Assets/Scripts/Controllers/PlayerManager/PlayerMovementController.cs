@@ -22,6 +22,7 @@ namespace Controllers.PlayerManager
         private Vector2 _clamp;
         private bool _isTouchingPlayer;
         private bool _station;
+        private bool _minigameHelicopter;
 
         #endregion
         #endregion
@@ -37,7 +38,6 @@ namespace Controllers.PlayerManager
         {
             return Resources.Load<SO_PlayerData>("Data/SO_PlayerData").PlayerData;
         }
-        
         public void movementcontroller(HorizontalInputParams inputParams)
         {
             _inputSpeed = inputParams.XValue;

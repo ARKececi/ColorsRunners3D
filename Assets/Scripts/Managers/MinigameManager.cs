@@ -24,14 +24,12 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            PlayerSignals.Instance.onPlatformClose += OnPlatformClose;
             PlayerSignals.Instance.onPlatform += OnPlatform;
             PlayerSignals.Instance.onTarretMinigame += OnTarretMinigame;
         }
 
         private void UnsubscribeEvents()
         {
-            PlayerSignals.Instance.onPlatformClose -= OnPlatformClose;
             PlayerSignals.Instance.onPlatform -= OnPlatform;
             PlayerSignals.Instance.onTarretMinigame -= OnTarretMinigame;
         }
@@ -41,11 +39,6 @@ namespace Managers
             UnsubscribeEvents();
         }
         #endregion
-        
-        private void OnPlatformClose()
-        {
-            helicopterMinigameController.Close();
-        }
 
         private void OnPlatform(GameObject obj)
         {

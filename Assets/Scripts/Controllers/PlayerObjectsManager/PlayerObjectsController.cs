@@ -117,14 +117,19 @@ namespace Controllers.PlayerObjectsManager
         }
         public  void Bullet(){ _bullet = true;}
 
-        public void PlayExecution(GameObject gameObject)
+        public void PlayExecution()
         {
             if (_bullet != true)
             {
                 PlayerObjectsSignals.Instance.onMinigameAdd?.Invoke(transform.gameObject);
                 PlayerAnimation("Dead");
-                DOVirtual.DelayedCall(5,()=>PlayerObjectsSignals.Instance.onListChange?.Invoke(gameObject, "Pool"));
+                DOVirtual.DelayedCall(5, ()=>PlayerObjectsSignals.Instance.onMinigamePoolAdd?.Invoke(transform.gameObject));
             }
+        }
+
+        public void SetOutlineBorder(bool isOutlineOn)
+        {
+            transform.GetChild(0).GetComponent<Renderer>().material.DOFloat(isOutlineOn ? 0f : 50f, "_OutlineSize", 1f);
         }
         public void PlayHelicopterExecution()
         {
@@ -138,6 +143,7 @@ namespace Controllers.PlayerObjectsManager
             else
             {
                 PlayerObjectsSignals.Instance.onSlowlyStack?.Invoke(transform.gameObject);
+                DOVirtual.DelayedCall(.5f, () => SetOutlineBorder(false));
             }
         }
 

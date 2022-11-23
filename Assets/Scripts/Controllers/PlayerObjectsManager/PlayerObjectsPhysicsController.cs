@@ -44,7 +44,7 @@ namespace Controllers.PlayerObjectsManager
             {
                 if (_bullet != true)
                 {
-                    playerObjectsController.PlayExecution(transform.gameObject);
+                    playerObjectsController.PlayExecution();
                     playerObjectsController.Bullet();
                 }
                 _bullet = true;

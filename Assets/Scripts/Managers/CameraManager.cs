@@ -1,6 +1,9 @@
 using System;
 using Cinemachine;
+using Controllers.CameraManager;
+using Signals;
 using UnityEngine;
+using CameraState = Enums.CameraState;
 
 namespace Managers
 {
@@ -9,24 +12,43 @@ namespace Managers
         #region Self Variables
 
         #region Serialized Variables
-
-        [SerializeField] private Animator animator;
-        [SerializeField] private CinemachineStateDrivenCamera vmStateCamera;
-        [SerializeField] private GameObject player;
+        
+        [SerializeField] private CameraController cameraController;
 
         #endregion
 
         #endregion
-
-        private void Start()
+        
+        #region Event Subscription
+        private void OnEnable()
         {
-            OnSetCamera();
+            SubscribeEvents();
         }
 
-        private void OnSetCamera()
+        private void SubscribeEvents()
         {
-            vmStateCamera.Follow = player.transform;
-            animator.SetTrigger("Runner");
+            MinigameSignals.Instance.onSetCamera += OnSetCamera;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            MinigameSignals.Instance.onSetCamera += OnSetCamera;
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+        #endregion
+
+        private void OnPlayCamera(CameraState cameraState)
+        {
+            cameraController.PlayCamera(cameraState);
+        }
+
+        private void OnSetCamera(GameObject follow)
+        {
+            cameraController.SetCamera(follow);
         }
     }
 }

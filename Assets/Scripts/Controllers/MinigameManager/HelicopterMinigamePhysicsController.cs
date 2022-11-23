@@ -10,6 +10,7 @@ namespace Controllers.MinigameManager
         #region Serialized Variables
         
         [SerializeField] private HelicopterMinigameController helicopterMinigameController;
+        [SerializeField] private GameObject standBy;
 
         #endregion
         #endregion
@@ -19,8 +20,13 @@ namespace Controllers.MinigameManager
             {
                 if (other.CompareTag("PlayerObj"))
                 {
-                    helicopterMinigameController.Close();
+                    helicopterMinigameController.Close(other.transform.parent.gameObject);
                 }
+            }
+
+            if (other.CompareTag("Player"))
+            {
+                MinigameSignals.Instance.onSetCamera?.Invoke(standBy);
             }
         }
     }

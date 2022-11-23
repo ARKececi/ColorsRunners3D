@@ -46,7 +46,7 @@ namespace Managers
             CoreGameSignals.Instance.onReset -= OnReset;
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onFinish -= OnFinish;
-            CoreGameSignals.Instance.onStation += OnStation;
+            CoreGameSignals.Instance.onStation -= OnStation;
             MinigameSignals.Instance.onSlowMove -= OnSlowMove;
         }
 

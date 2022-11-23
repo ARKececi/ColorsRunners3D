@@ -9,9 +9,6 @@ namespace Controllers.MinigameManager
         #region Self Variables
         #region Serialized Variables
 
-        [SerializeField] private GameObject minigamePlatform;
-        [SerializeField] private GameObject door;
-
         #endregion
         #region Private Variables
 
@@ -19,15 +16,16 @@ namespace Controllers.MinigameManager
 
         #endregion
         #endregion
-        
+
         private int StackCount() { _stackCount = (int)MinigameSignals.Instance.onStackCount?.Invoke(); return _stackCount;}
-        public void Close()
+        
+        public void Close(GameObject playerObj)
         {
             if (StackCount() <= 0)
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    if (transform.GetChild(i).GetComponent<Renderer>().material.name != door.GetComponent<Renderer>().material.name)
+                    if (transform.GetChild(i).GetComponent<Renderer>().material.color != playerObj.transform.GetChild(0).GetComponent<Renderer>().material.color)
                     {
                         transform.GetChild(i).transform.DOScaleZ(0, 1).SetDelay(1.5f);
                     }

@@ -8,6 +8,7 @@ namespace Signals
     public class StackSignals : MonoSingleton<StackSignals>
     {
         public UnityAction onPlatformClose = delegate { };
+        public UnityAction<bool> onSetOutlineBorder = delegate { };
         public UnityAction<GameObject> onMinigameColor = delegate { };
     }
 }

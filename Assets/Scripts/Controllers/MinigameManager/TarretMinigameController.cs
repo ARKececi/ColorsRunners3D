@@ -160,7 +160,6 @@ namespace Controllers.MinigameManager
                 }
                 else yield break;
             }
-            
         }
     }
 }

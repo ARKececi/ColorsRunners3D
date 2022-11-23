@@ -33,6 +33,7 @@ namespace Controllers.StackManager
         #region Private Variables
 
         private GameObject _platform;
+        private GameObject _playerManager;
         #endregion
         #endregion
 
@@ -41,6 +42,7 @@ namespace Controllers.StackManager
             StackData = GetStackData();
             ListChangeCommand = new ListChangeCommand(ref StackListObj, ref PoolListObj, transform, pool,
                 player.transform, ref StackData);
+            
         }
 
         private void Start()
@@ -99,6 +101,7 @@ namespace Controllers.StackManager
                 {
                     CoreGameSignals.Instance.onStation?.Invoke(true);
                     player.transform.position = new Vector3(-1.5f,player.transform.position.y,MinigameObjList[0].transform.position.z);
+                    DOVirtual.DelayedCall(2, () => StackSignals.Instance.onSetOutlineBorder?.Invoke(true));
                     DOVirtual.DelayedCall(4, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke()); 
                     DOVirtual.DelayedCall(5.5f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
                 }
@@ -146,6 +149,8 @@ namespace Controllers.StackManager
         {
             var index = _slowStack.Count;
             SlowStackStriking(index);
+            _playerManager = FindObjectOfType<Managers.PlayerManager>().gameObject;
+            MinigameSignals.Instance.onSetCamera?.Invoke(_playerManager);
             CoreGameSignals.Instance.onStation?.Invoke(false);
             for (int i = 0; i < index + index; i++)
             {
