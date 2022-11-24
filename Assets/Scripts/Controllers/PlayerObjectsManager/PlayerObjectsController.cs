@@ -31,6 +31,8 @@ namespace Controllers.PlayerObjectsManager
         private GameObject _execution;
         private Transform _oldTransform;
         private bool _bullet;
+        private GameObject _player;
+        private GameObject _firstPlayer;
 
         #endregion
         #endregion
@@ -43,6 +45,30 @@ namespace Controllers.PlayerObjectsManager
             materials = _colorData.Colors;
         }
 
+        private void Start()
+        {
+            _player = FindObjectOfType<Managers.PlayerManager>().gameObject;
+        }
+
+        private void FixedUpdate()
+        {
+            Visibility();
+        }
+
+        public void Visibility()
+        {
+            if (transform.position.z < _player.transform.position.z - 11.7f)
+            {
+                transform.GetChild(2).gameObject.SetActive(false);
+                _firstPlayer = PlayerObjectsSignals.Instance.onFirstPlayerObject?.Invoke();
+                Comparison(_firstPlayer.transform.GetChild(0).gameObject);
+            }
+            else
+            {
+                transform.GetChild(2).gameObject.SetActive(true);
+            }
+        }
+
         private ObjectData GetObjectData(){return Resources.Load<SO_ObjectData>("Data/SO_ObjectData").ObjectData;}
         private ColorData GetColorData(){return Resources.Load<SO_ColorData>("Data/SO_ColorData").ColorData;}
         private PlayerData GetPlayerData(){return Resources.Load<SO_PlayerData>("Data/SO_PlayerData").PlayerData;}
@@ -51,7 +77,7 @@ namespace Controllers.PlayerObjectsManager
         {
             for (int i = 0; i < materials.Count; i++)
             {
-                if (materials[i].color == door.GetComponent<MeshRenderer>().material.color)
+                if (materials[i].color == door.GetComponent<Renderer>().material.color)
                 {
                     Color index = (Color)Enum.Parse(typeof(Color), materials[i].name);
                     ColorChange(index);
@@ -161,7 +187,7 @@ namespace Controllers.PlayerObjectsManager
             {
                 animator.SetTrigger("StandingToCrouched");
                 _oldTransform = transform;
-                transform.DOLocalMoveY(3.35f, .2f);
+                transform.DOLocalMoveY(-.2f, .2f);
             }
             else if (animation == "Dead")
             {

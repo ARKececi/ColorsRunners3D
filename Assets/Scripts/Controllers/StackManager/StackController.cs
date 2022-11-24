@@ -6,7 +6,6 @@ using Data.ValueObject;
 using DG.Tweening;
 using Signals;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Controllers.StackManager
 {
@@ -24,29 +23,28 @@ namespace Controllers.StackManager
 
         #endregion
         #region Serialized Variables
-
-        [SerializeField] private GameObject player;
+        
         [SerializeField] private GameObject playerObj;
         [SerializeField] private Transform pool;
 
         #endregion
         #region Private Variables
-
+        
         private GameObject _platform;
-        private GameObject _playerManager;
+        private GameObject _player;
         #endregion
         #endregion
 
         private void Awake()
         {
             StackData = GetStackData();
-            ListChangeCommand = new ListChangeCommand(ref StackListObj, ref PoolListObj, transform, pool,
-                player.transform, ref StackData);
-            
         }
 
         private void Start()
         {
+            _player = FindObjectOfType<Managers.PlayerManager>().gameObject;
+            ListChangeCommand = new ListChangeCommand(ref StackListObj, ref PoolListObj, transform, pool,
+                _player.transform, ref StackData);
             for (int i = 0; i < 100; i++)
             {
                 PoolInstantiate();
@@ -58,6 +56,7 @@ namespace Controllers.StackManager
             }
         }
         
+        public GameObject FirstPlayerObject(){ return StackListObj[0].gameObject;}
         public void MinigameStackAdd(GameObject obj) { _slowStack.Add(obj); MinigameObjList.Remove(obj);}
         public int StackCount(){return StackListObj.Count - 1;}
         private StackData GetStackData() => Resources.Load<SO_StackData>("Data/SO_StackData").StackData;
@@ -67,7 +66,7 @@ namespace Controllers.StackManager
             int count = StackListObj.Count;
             if (count != 0)
             {
-                StackListObj[0].transform.position = player.transform.position;
+                StackListObj[0].transform.position = _player.transform.position;
             }
         }
 
@@ -91,7 +90,7 @@ namespace Controllers.StackManager
                 if (StackListObj.Count != 1)
                 {
                     Transform lastPosition = StackListObj[1].transform;
-                    player.transform.position = lastPosition.position;
+                    _player.transform.position = lastPosition.position;
                 }
                 var obj = StackListObj[0];
                 MinigameObjList.Add(obj);
@@ -100,7 +99,7 @@ namespace Controllers.StackManager
                 if (StackListObj.Count == 0)
                 {
                     CoreGameSignals.Instance.onStation?.Invoke(true);
-                    player.transform.position = new Vector3(-1.5f,player.transform.position.y,MinigameObjList[0].transform.position.z);
+                    _player.transform.position = new Vector3(MinigameObjList[0].transform.position.x,_player.transform.position.y,MinigameObjList[0].transform.position.z);
                     DOVirtual.DelayedCall(2, () => StackSignals.Instance.onSetOutlineBorder?.Invoke(true));
                     DOVirtual.DelayedCall(4, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke()); 
                     DOVirtual.DelayedCall(5.5f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
@@ -149,8 +148,7 @@ namespace Controllers.StackManager
         {
             var index = _slowStack.Count;
             SlowStackStriking(index);
-            _playerManager = FindObjectOfType<Managers.PlayerManager>().gameObject;
-            MinigameSignals.Instance.onSetCamera?.Invoke(_playerManager);
+            MinigameSignals.Instance.onSetCamera?.Invoke(_player);
             CoreGameSignals.Instance.onStation?.Invoke(false);
             for (int i = 0; i < index + index; i++)
             {

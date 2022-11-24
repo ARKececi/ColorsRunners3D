@@ -18,15 +18,15 @@ namespace Controllers.CameraManager
         #region Private Variables
 
         private CameraState _cameraState;
-        private GameObject _playerManager;
+        private GameObject _player;
         
         #endregion
         #endregion
 
         private void Start()
         {
-            _playerManager = FindObjectOfType<Managers.PlayerManager>().gameObject;
-            SetCamera(_playerManager);
+            _player = FindObjectOfType<Managers.PlayerManager>().gameObject;
+            SetCamera(_player);
         }
         
         public void SetCamera(GameObject follow)

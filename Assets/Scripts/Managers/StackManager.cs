@@ -37,6 +37,7 @@ namespace Managers
             MinigameSignals.Instance.onStackCount += OnStackCount;
             PlayerSignals.Instance.onStackStriking += OnStackStriking;
             MinigameSignals.Instance.onTarretSetObj += OnTarretSetlist;
+            PlayerObjectsSignals.Instance.onFirstPlayerObject += OnFirstPlayerObject;
         }
         private void UnsubscribeEvents()
         {
@@ -46,9 +47,10 @@ namespace Managers
             PlayerObjectsSignals.Instance.onMinigamePoolAdd -= OnMinigamePoolAdd;
             MinigameSignals.Instance.onSlowlyStackAdd -= OnSlowlyStackAdd;
             MinigameSignals.Instance.onStackCount -= OnStackCount;
-            PlayerSignals.Instance.onStackStriking += OnStackStriking;
+            PlayerSignals.Instance.onStackStriking -= OnStackStriking;
             MinigameSignals.Instance.onTarretSetObj -= OnTarretSetlist;
             PlayerObjectsSignals.Instance.onMinigameAdd -= OnMinigameAdd;
+            PlayerObjectsSignals.Instance.onFirstPlayerObject -= OnFirstPlayerObject;
         }
         private void OnDisable()
         {
@@ -104,6 +106,11 @@ namespace Managers
         private void OnMinigameAdd(GameObject gameObject)
         {
             stackController.MinigameAdd(gameObject);
+        }
+
+        private GameObject OnFirstPlayerObject()
+        {
+            return stackController.FirstPlayerObject();
         }
     }
 }

@@ -81,5 +81,10 @@ namespace Managers
         {
             playerObjectsController.SetOutlineBorder(isOutlineOn);
         }
+
+        private void FirstPlayerObject()
+        {
+            playerObjectsController.Visibility();
+        }
     }
 }
