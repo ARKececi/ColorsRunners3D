@@ -12,30 +12,78 @@ namespace Managers
     {
         #region Self Variables
 
-        #region Private Variables
+        #region Serialized Variables
 
-        [Header("Data")] private InputData _inputData;
+        [SerializeField] private Joystick _joystick;
+
+        #endregion
+        #region Private Variables
         
+        [Header("Data")] private InputData _inputData;
+        private Vector3 _joystickPos;
         private Vector2? _mousePosition;
         private Vector3 _moveVector;
         private float _currentVelocity;
         private bool _isTouchingPlayer = true;
+        private bool _hyperCasual;
 
         #endregion
 
+        #endregion
+        
+        #region Event Subscription
+
+        private void OnEnable()
+        {
+            SubscribeEvents();
+        }
+
+        private void SubscribeEvents()
+        {
+            CoreGameSignals.Instance.OnGameChange += OnGameChange;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            CoreGameSignals.Instance.OnGameChange -= OnGameChange;
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+        
         #endregion
         
         private void Awake()
         {
             _inputData = GetInputData();
+            _hyperCasual = true;
         }
 
         private InputData GetInputData()
         {
             return Resources.Load<SO_InputData>("Data/SO_InputData").InputData;
         }
+
+        private void OnGameChange()
+        {
+            _hyperCasual = false;
+        }
         
         private void Update()
+        {
+            if (_hyperCasual)
+            {
+                HyperCasualInput();
+            }
+            else
+            {
+                CasualInput();
+            }
+        }
+
+        private void HyperCasualInput()
         {
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUIElement()) _mousePosition = Input.mousePosition;
 
@@ -61,6 +109,15 @@ namespace Managers
                             ClampValues = new Vector2(_inputData.ClampSides.x, _inputData.ClampSides.y)
                         });
                     }
+        }
+
+        private void CasualInput()
+        {
+            _joystickPos = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
+            InputSignals.Instance.onCasualMovement?.Invoke(new JoystickInputParams
+            {
+                JoystickMove = _joystickPos
+            });
         }
         
         private bool IsPointerOverUIElement()

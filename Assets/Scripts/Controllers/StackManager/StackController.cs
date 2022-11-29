@@ -70,6 +70,11 @@ namespace Controllers.StackManager
             }
         }
 
+        public void StackBetween()
+        {
+            StackData.StackBetween = 0.0f;
+        }
+
         public void MoveStack()
         {
             int Count = StackListObj.Count;

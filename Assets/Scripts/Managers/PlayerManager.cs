@@ -32,21 +32,25 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            InputSignals.Instance.onInputDragged += OnMovement;
+            InputSignals.Instance.onInputDragged += OnHyperCasualMovement;
             CoreGameSignals.Instance.onReset += OnReset;
             CoreGameSignals.Instance.onPlay += OnPlay;
             CoreGameSignals.Instance.onFinish += OnFinish;
             CoreGameSignals.Instance.onStation += OnStation;
+            CoreGameSignals.Instance.OnGameChange += OnGameChange;
+            InputSignals.Instance.onCasualMovement += OnCasualMovement;
             MinigameSignals.Instance.onSlowMove += OnSlowMove;
         }
 
         private void UnsubscribeEvents()
         {
-            InputSignals.Instance.onInputDragged -= OnMovement;
+            InputSignals.Instance.onInputDragged -= OnHyperCasualMovement;
             CoreGameSignals.Instance.onReset -= OnReset;
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onFinish -= OnFinish;
             CoreGameSignals.Instance.onStation -= OnStation;
+            CoreGameSignals.Instance.OnGameChange -= OnGameChange;
+            InputSignals.Instance.onCasualMovement -= OnCasualMovement;
             MinigameSignals.Instance.onSlowMove -= OnSlowMove;
         }
 
@@ -54,7 +58,7 @@ namespace Managers
         {
             UnsubscribeEvents();
         }
-
+        
         #endregion
 
         private void OnStation(bool variable)
@@ -77,14 +81,24 @@ namespace Managers
             playerMovementController.Finish();
         }
         
-        private void OnMovement(HorizontalInputParams horizontalInputParams)
+        private void OnHyperCasualMovement(HorizontalInputParams horizontalInputParams)
         {
-            playerMovementController.movementcontroller(horizontalInputParams);
+            playerMovementController.HyperCasualMovementController(horizontalInputParams);
+        }
+
+        private void OnCasualMovement(JoystickInputParams joystickInputParams)
+        {
+            playerMovementController.CasualMovementController(joystickInputParams);
         }
 
         private void OnSlowMove()
         {
             playerMovementController.SlowMove();
+        }
+
+        private void OnGameChange()
+        {
+            playerMovementController.GameChange();
         }
     }
 }

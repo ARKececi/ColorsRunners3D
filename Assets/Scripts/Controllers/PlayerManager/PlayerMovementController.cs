@@ -20,9 +20,11 @@ namespace Controllers.PlayerManager
 
         private float _inputSpeed;
         private Vector2 _clamp;
+        private Vector3 _joystickInput;
         private bool _isTouchingPlayer;
         private bool _station;
         private bool _minigameHelicopter;
+        private bool _hyperCasual;
 
         #endregion
         #endregion
@@ -32,33 +34,56 @@ namespace Controllers.PlayerManager
             _playerData = GetPlayerData();
             _isTouchingPlayer = false;
             _station = true;
+            _hyperCasual = true;
         }
         
         private PlayerData GetPlayerData()
         {
             return Resources.Load<SO_PlayerData>("Data/SO_PlayerData").PlayerData;
         }
-        public void movementcontroller(HorizontalInputParams inputParams)
+        public void HyperCasualMovementController(HorizontalInputParams inputParams)
         {
             _inputSpeed = inputParams.XValue;
             _clamp = inputParams.ClampValues;
         }
-        
+
+        public void CasualMovementController(JoystickInputParams joystickInputParams)
+        {
+            _joystickInput = joystickInputParams.JoystickMove;
+        }
+
+        public void GameChange()
+        {
+            _hyperCasual = false;
+        }
+
         private void FixedUpdate()
         {
             if (_isTouchingPlayer)
             {
-                if (!_station)
-                    Move();
+                if (_hyperCasual)
+                {
+                    if (!_station)
+                        HyperCaualMove();
+                    else
+                        StopMove();
+                }
                 else
-                    StopMove();
+                {
+                    CasualMove();
+                }
             }
         }
         
-        private void Move()
+        private void HyperCaualMove()
         {
             move.velocity = new Vector3(_inputSpeed * _playerData.MovementSide, move.velocity.y, _playerData.MoveSpeed);
             move.position = new Vector3(Mathf.Clamp(move.position.x, _clamp.x, _clamp.y), move.position.y, move.position.z);
+        }
+
+        private void CasualMove()
+        {
+            move.velocity = new Vector3(_joystickInput.x * _playerData.MovementSide, move.velocity.y, _joystickInput.z * _playerData.MovementSide);
         }
 
         private void StopMove()
