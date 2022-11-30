@@ -36,6 +36,7 @@ namespace Managers
             MinigameSignals.Instance.onPlayHelicopterExecution += OnPlayHelicopterExecution;
             StackSignals.Instance.onMinigameColor += OnMinigameColor;
             StackSignals.Instance.onSetOutlineBorder += OnSetOutlineBorder;
+            CoreGameSignals.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
@@ -44,6 +45,7 @@ namespace Managers
             MinigameSignals.Instance.onPlayHelicopterExecution -= OnPlayHelicopterExecution;
             StackSignals.Instance.onMinigameColor -= OnMinigameColor;
             StackSignals.Instance.onSetOutlineBorder -= OnSetOutlineBorder;
+            CoreGameSignals.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
@@ -85,6 +87,11 @@ namespace Managers
         private void FirstPlayerObject()
         {
             playerObjectsController.Visibility();
+        }
+
+        private void OnReset()
+        {
+            playerObjectsController.Reset();
         }
     }
 }

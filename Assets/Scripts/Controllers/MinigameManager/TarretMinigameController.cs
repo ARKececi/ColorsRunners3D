@@ -106,7 +106,14 @@ namespace Controllers.MinigameManager
 
         private void SetAGoal()
         {
-            _targetObj = MinigameSignals.Instance.onTarretSetObj?.Invoke();
+            if (MinigameSignals.Instance.onStackCount?.Invoke() >= 0)
+            {
+                _targetObj = MinigameSignals.Instance.onTarretSetObj?.Invoke();
+            }
+            else
+            {
+                _targetObj = null;
+            }
         }
 
         public IEnumerator TargetLook()
@@ -116,13 +123,21 @@ namespace Controllers.MinigameManager
                 if (_limit == true)
                 {
                     SetAGoal();
-                    if (_platform.GetComponent<Renderer>().material.color != _targetObj.transform.GetChild(0).GetComponent<Renderer>().material.color)
+                    if (_targetObj != null)
                     {
-                        rightTurret.transform.DOLookAt(_targetObj.transform.position, .4f);
-                        leftTurret.transform.DOLookAt(_targetObj.transform.position, .4f);
+                        if (_platform.GetComponent<Renderer>().material.color != _targetObj.transform.GetChild(0).GetComponent<Renderer>().material.color)
+                        {
+                            rightTurret.transform.DOLookAt(_targetObj.transform.position, .4f);
+                            leftTurret.transform.DOLookAt(_targetObj.transform.position, .4f);
+                        }
+                        else
+                        {
+                            FakeTargetLook();
+                        }
                     }
                     else
                     {
+                        _limit = false;
                         FakeTargetLook();
                     }
                     yield return new WaitForFixedUpdate();
@@ -160,6 +175,11 @@ namespace Controllers.MinigameManager
                 }
                 else yield break;
             }
+        }
+        
+        public void Reset()
+        {
+            _index = 0;
         }
     }
 }

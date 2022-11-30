@@ -32,12 +32,23 @@ namespace Controllers.StackManager
         
         private GameObject _platform;
         private GameObject _player;
+        private bool _reset;
+        private bool _hyperCasual;
+        private bool _minigame;
+        
         #endregion
         #endregion
 
         private void Awake()
         {
             StackData = GetStackData();
+            _hyperCasual = true;
+            _reset = false;
+        }
+        
+        public void GameChange()
+        {
+            _hyperCasual = false;
         }
 
         private void Start()
@@ -68,11 +79,16 @@ namespace Controllers.StackManager
             {
                 StackListObj[0].transform.position = _player.transform.position;
             }
-        }
-
-        public void StackBetween()
-        {
-            StackData.StackBetween = 0.0f;
+            else
+            {
+                if (_hyperCasual)
+                {
+                    if (!_minigame)
+                    {
+                        Fail();
+                    }
+                }
+            }
         }
 
         public void MoveStack()
@@ -88,8 +104,22 @@ namespace Controllers.StackManager
             }
         }
 
+        public void Fail()
+        {
+            if (_slowStack.Count == 0)
+            {
+                CoreGameSignals.Instance.onStation?.Invoke(true);
+                if (!_reset)
+                {
+                    _reset = true;
+                    StackSignals.Instance.onUIReset?.Invoke();
+                }
+            }
+        }
+
         public void HelicopterPlatformStack()
         {
+            _minigame = true;
             if (StackListObj.Count > 0)
             {
                 if (StackListObj.Count != 1)
@@ -106,7 +136,8 @@ namespace Controllers.StackManager
                     CoreGameSignals.Instance.onStation?.Invoke(true);
                     _player.transform.position = new Vector3(MinigameObjList[0].transform.position.x,_player.transform.position.y,MinigameObjList[0].transform.position.z);
                     DOVirtual.DelayedCall(2, () => StackSignals.Instance.onSetOutlineBorder?.Invoke(true));
-                    DOVirtual.DelayedCall(4, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke()); 
+                    DOVirtual.DelayedCall(4, () => MinigameSignals.Instance.onPlayHelicopterExecution?.Invoke());
+                    DOVirtual.DelayedCall(4.1f, () => Fail());
                     DOVirtual.DelayedCall(5.5f, () => StartCoroutine(SlowlyStackAdd())); // platformun kapanmasına göre bir koşul yaz
                 }
             }
@@ -153,8 +184,11 @@ namespace Controllers.StackManager
         {
             var index = _slowStack.Count;
             SlowStackStriking(index);
-            MinigameSignals.Instance.onSetCamera?.Invoke(_player);
-            CoreGameSignals.Instance.onStation?.Invoke(false);
+            if (_slowStack.Count != 0)
+            {
+                MinigameSignals.Instance.onSetCamera?.Invoke(_player);
+                CoreGameSignals.Instance.onStation?.Invoke(false);
+            }
             for (int i = 0; i < index + index; i++)
             {
                 StackListObj.Add(_slowStack[0]);
@@ -181,5 +215,15 @@ namespace Controllers.StackManager
         {
             return StackListObj[0];
         }
+
+        public void Reset()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                ListChange(PoolListObj[0], "Stack");
+            }
+            DOVirtual.DelayedCall(.1f, () => ResetBool());
+        }
+        private void ResetBool(){ _reset = false;}
     }
 }

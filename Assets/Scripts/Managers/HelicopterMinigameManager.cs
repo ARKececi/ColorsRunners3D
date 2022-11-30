@@ -1,16 +1,14 @@
 using Controllers.MinigameManager;
 using Signals;
 using UnityEngine;
-using Color = Enums.Color;
 
 namespace Managers
 {
-    public class MinigameManager : MonoBehaviour
+    public class HelicopterMinigameManager : MonoBehaviour
     {
         #region Self Variables
         #region Serialized Variables
-
-        [SerializeField] private TarretMinigameController _minigameController;
+        
         [SerializeField] private HelicopterMinigameController helicopterMinigameController;
 
         #endregion
@@ -24,14 +22,12 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            PlayerSignals.Instance.onPlatform += OnPlatform;
-            PlayerSignals.Instance.onTarretMinigame += OnTarretMinigame;
+            CoreGameSignals.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
         {
-            PlayerSignals.Instance.onPlatform -= OnPlatform;
-            PlayerSignals.Instance.onTarretMinigame -= OnTarretMinigame;
+            CoreGameSignals.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
@@ -39,15 +35,10 @@ namespace Managers
             UnsubscribeEvents();
         }
         #endregion
-
-        private void OnPlatform(GameObject obj)
+        
+        private void OnReset()
         {
-            _minigameController.Platform(obj);
-        }
-
-        private void OnTarretMinigame()
-        {
-            StartCoroutine(_minigameController.TargetLook());
+            helicopterMinigameController.Reset();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace Controllers.PlayerObjectsManager
         #region Private Variables
 
         private bool _bullet;
+        private bool CasualGame;
+        
         #endregion
         #endregion
         private void OnTriggerEnter(Collider other)
@@ -48,6 +50,14 @@ namespace Controllers.PlayerObjectsManager
                     playerObjectsController.Bullet();
                 }
                 _bullet = true;
+            }
+
+            if (CasualGame)
+            {
+                if (other.CompareTag("PlayerObj"))
+                {
+                    
+                }
             }
         }
     }

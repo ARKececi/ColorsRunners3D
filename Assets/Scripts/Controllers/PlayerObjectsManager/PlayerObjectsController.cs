@@ -52,7 +52,10 @@ namespace Controllers.PlayerObjectsManager
 
         private void FixedUpdate()
         {
-            Visibility();
+            if (MinigameSignals.Instance.onStackCount?.Invoke() >= 0)
+            {
+                Visibility();
+            }
         }
 
         public void Visibility()
@@ -171,6 +174,11 @@ namespace Controllers.PlayerObjectsManager
                 PlayerObjectsSignals.Instance.onSlowlyStack?.Invoke(transform.gameObject);
                 DOVirtual.DelayedCall(.5f, () => SetOutlineBorder(false));
             }
+        }
+
+        public void Reset()
+        {
+            PlayerObjectsSignals.Instance.onMinigamePoolAdd?.Invoke(transform.gameObject);
         }
 
         public void PlayerAnimation(string animation) // durum makinesi yazılacak.

@@ -14,6 +14,7 @@ namespace Controllers.MinigameManager
         #region Private Variables
 
         private int _stackCount;
+        private int _platform;
 
         #endregion
         #endregion
@@ -29,9 +30,17 @@ namespace Controllers.MinigameManager
                     if (transform.GetChild(i).GetComponent<Renderer>().material.color != playerObj.transform.GetChild(0).GetComponent<Renderer>().material.color)
                     {
                         transform.GetChild(i).transform.DOScaleZ(0, 1).SetDelay(1.5f);
+                        _platform = i;
                     }
                 }
             }
+        }
+
+        public void Reset()
+        {
+            var transformLocalScale = transform.GetChild(_platform).transform.localScale;
+            transformLocalScale.z = 1;
+            transform.GetChild(_platform).transform.localScale = transformLocalScale;
         }
     }
 }

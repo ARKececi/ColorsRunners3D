@@ -10,6 +10,7 @@ namespace Controllers
         {
             if (other.CompareTag("Player"))
             {
+                CoreGameSignals.Instance.onStation?.Invoke(true);
                 CoreGameSignals.Instance.OnGameChange?.Invoke();
                 transform.GetComponent<BoxCollider>().isTrigger = false;
             }

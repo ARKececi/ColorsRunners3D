@@ -12,6 +12,7 @@ namespace Controllers.PlayerManager
         #region Serialized Variables
 
         [SerializeField] private Rigidbody move;
+        [SerializeField] private GameObject idleObj;
 
         #endregion
         #region Private Variables
@@ -21,6 +22,7 @@ namespace Controllers.PlayerManager
         private float _inputSpeed;
         private Vector2 _clamp;
         private Vector3 _joystickInput;
+        private Vector3 _resetPos;
         private bool _isTouchingPlayer;
         private bool _station;
         private bool _minigameHelicopter;
@@ -70,7 +72,14 @@ namespace Controllers.PlayerManager
                 }
                 else
                 {
-                    CasualMove();
+                    if (!_station)
+                    {
+                        CasualMove();
+                    }
+                    else
+                    {
+                        StopMove();
+                    }
                 }
             }
         }
@@ -84,6 +93,14 @@ namespace Controllers.PlayerManager
         private void CasualMove()
         {
             move.velocity = new Vector3(_joystickInput.x * _playerData.MovementSide, move.velocity.y, _joystickInput.z * _playerData.MovementSide);
+            if (_joystickInput.x == 0 || _joystickInput.z == 0)
+            {
+                idleObj.GetComponent<Animator>().ResetTrigger("Runner");
+            }
+            else
+            {
+                idleObj.GetComponent<Animator>().ResetTrigger("Idle");
+            }
         }
 
         private void StopMove()
@@ -112,6 +129,7 @@ namespace Controllers.PlayerManager
         
         public void Play()
         {
+            _resetPos = transform.position;
             _isTouchingPlayer = true;
             _station = false;
             PlayerSignals.Instance.onPlayerAnimation?.Invoke("Runner");
@@ -124,8 +142,12 @@ namespace Controllers.PlayerManager
 
         public void Reset()
         {
+            transform.position = _resetPos;
             _isTouchingPlayer = false;
             _station = true;
+            _hyperCasual = true;
+            _playerData.MoveSpeed = 10;
+            MinigameSignals.Instance.onSetCamera?.Invoke(transform.gameObject);
         }
     }
 }

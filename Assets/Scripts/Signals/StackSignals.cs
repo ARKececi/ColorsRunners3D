@@ -10,5 +10,7 @@ namespace Signals
         public UnityAction onPlatformClose = delegate { };
         public UnityAction<bool> onSetOutlineBorder = delegate { };
         public UnityAction<GameObject> onMinigameColor = delegate { };
+        public UnityAction onReset = delegate { };
+        public UnityAction onUIReset = delegate { };
     }
 }
