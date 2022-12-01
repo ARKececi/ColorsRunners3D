@@ -51,12 +51,15 @@ namespace Controllers.PlayerObjectsManager
                 }
                 _bullet = true;
             }
+        }
 
-            if (CasualGame)
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("IdleObj"))
             {
-                if (other.CompareTag("PlayerObj"))
+                if (other.transform.position == transform.position)
                 {
-                    
+                    playerObjectsController.ObjCasualStack();
                 }
             }
         }

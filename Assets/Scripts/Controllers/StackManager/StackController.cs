@@ -88,6 +88,11 @@ namespace Controllers.StackManager
                         Fail();
                     }
                 }
+                else
+                {
+                    CoreGameSignals.Instance.onStation?.Invoke(false);
+                    CoreGameSignals.Instance.onPlayerGameChange?.Invoke();
+                }
             }
         }
 
@@ -114,6 +119,21 @@ namespace Controllers.StackManager
                     _reset = true;
                     StackSignals.Instance.onUIReset?.Invoke();
                 }
+            }
+        }
+
+        public void CasualStack()
+        {
+            if (StackListObj.Count > 0)
+            {
+                if (StackListObj.Count != 1)
+                {
+                    Transform lastPosition = StackListObj[1].transform;
+                    _player.transform.position = lastPosition.position;
+                }
+                var obj = StackListObj[0];
+                MinigameObjList.Add(obj);
+                StackListObj.Remove(obj);
             }
         }
 
@@ -159,11 +179,14 @@ namespace Controllers.StackManager
         public void StackStriking()
         {
             var count = StackListObj.Count;
-            for (int i = 0; i < count; i++)
+            if (count > 0)
             {
-                ListChange(PoolListObj[0], "Stack");
+                for (int i = 0; i < count; i++)
+                {
+                    ListChange(PoolListObj[0], "Stack");
+                }
+                StackSignals.Instance.onMinigameColor?.Invoke(StackListObj[0]);
             }
-            StackSignals.Instance.onMinigameColor?.Invoke(StackListObj[0]);
         }
 
         public void SlowStackStriking(int index)

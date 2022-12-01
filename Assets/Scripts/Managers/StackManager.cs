@@ -39,6 +39,8 @@ namespace Managers
             MinigameSignals.Instance.onTarretSetObj += OnTarretSetlist;
             PlayerObjectsSignals.Instance.onFirstPlayerObject += OnFirstPlayerObject;
             CoreGameSignals.Instance.onReset += OnReset;
+            CoreGameSignals.Instance.onGameChange += OnGameChange;
+            PlayerObjectsSignals.Instance.onCasualStack += OnCasualStack;
 
         }
         private void UnsubscribeEvents()
@@ -54,6 +56,8 @@ namespace Managers
             PlayerObjectsSignals.Instance.onMinigameAdd -= OnMinigameAdd;
             PlayerObjectsSignals.Instance.onFirstPlayerObject -= OnFirstPlayerObject;
             CoreGameSignals.Instance.onReset -= OnReset;
+            CoreGameSignals.Instance.onGameChange -= OnGameChange;
+            PlayerObjectsSignals.Instance.onCasualStack -= OnCasualStack;
         }
         private void OnDisable()
         {
@@ -126,6 +130,16 @@ namespace Managers
         private void OnReset()
         {
             DOVirtual.DelayedCall(.1f,()=>stackController.Reset());
+        }
+
+        private void OnGameChange()
+        {
+            stackController.GameChange();
+        }
+
+        private void OnCasualStack()
+        {
+            stackController.CasualStack();
         }
     }
 }

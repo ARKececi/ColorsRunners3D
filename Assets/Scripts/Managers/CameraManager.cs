@@ -28,11 +28,14 @@ namespace Managers
         private void SubscribeEvents()
         {
             MinigameSignals.Instance.onSetCamera += OnSetCamera;
+            PlayerSignals.Instance.onPlayCamera += OnPlayCamera;
+
         }
 
         private void UnsubscribeEvents()
         {
-            MinigameSignals.Instance.onSetCamera += OnSetCamera;
+            MinigameSignals.Instance.onSetCamera -= OnSetCamera;
+            PlayerSignals.Instance.onPlayCamera -= OnPlayCamera;
         }
 
         private void OnDisable()

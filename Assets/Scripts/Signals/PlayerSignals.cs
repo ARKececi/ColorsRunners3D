@@ -1,3 +1,4 @@
+using Enums;
 using Extentions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,5 +12,7 @@ namespace Signals
         public UnityAction<GameObject> onPlatform = delegate { };
         public UnityAction onTarretMinigame = delegate { };
         public UnityAction onPlatformClose = delegate { };
+        public UnityAction onCasualGame = delegate { };
+        public UnityAction<CameraState> onPlayCamera = delegate { };
     }
 }

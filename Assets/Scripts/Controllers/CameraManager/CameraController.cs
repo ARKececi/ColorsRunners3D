@@ -36,13 +36,15 @@ namespace Controllers.CameraManager
 
         public void PlayCamera(CameraState cameraState)
         {
-            Debug.Log(_cameraState);
             switch (_cameraState)
             {
                 case CameraState.Runner:
                     animator.SetTrigger(_cameraState.ToString());
                     break;
                 case CameraState.Minigame:
+                    animator.SetTrigger(_cameraState.ToString());
+                    break;
+                case CameraState.Casual:
                     animator.SetTrigger(_cameraState.ToString());
                     break;
             }

@@ -40,12 +40,12 @@ namespace Managers
 
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.OnGameChange += OnGameChange;
+            CoreGameSignals.Instance.onGameChange += OnGameChange;
         }
 
         private void UnsubscribeEvents()
         {
-            CoreGameSignals.Instance.OnGameChange -= OnGameChange;
+            CoreGameSignals.Instance.onGameChange -= OnGameChange;
         }
 
         private void OnDisable()

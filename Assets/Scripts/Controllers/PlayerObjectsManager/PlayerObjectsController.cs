@@ -33,6 +33,7 @@ namespace Controllers.PlayerObjectsManager
         private bool _bullet;
         private GameObject _player;
         private GameObject _firstPlayer;
+        private bool _hyperCasual;
 
         #endregion
         #endregion
@@ -116,6 +117,12 @@ namespace Controllers.PlayerObjectsManager
             {
                 PlayerAnimation("Runner");
             }
+        }
+
+        public void ObjCasualStack()
+        {
+            PlayerObjectsSignals.Instance.onCasualStack?.Invoke();
+            transform.gameObject.SetActive(false);
         }
 
         public void MinigameControl()

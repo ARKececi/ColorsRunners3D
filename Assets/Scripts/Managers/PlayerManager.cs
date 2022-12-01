@@ -37,7 +37,7 @@ namespace Managers
             CoreGameSignals.Instance.onPlay += OnPlay;
             CoreGameSignals.Instance.onFinish += OnFinish;
             CoreGameSignals.Instance.onStation += OnStation;
-            CoreGameSignals.Instance.OnGameChange += OnGameChange;
+            CoreGameSignals.Instance.onPlayerGameChange += OnGameChange;
             InputSignals.Instance.onCasualMovement += OnCasualMovement;
             MinigameSignals.Instance.onSlowMove += OnSlowMove;
         }
@@ -49,7 +49,7 @@ namespace Managers
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onFinish -= OnFinish;
             CoreGameSignals.Instance.onStation -= OnStation;
-            CoreGameSignals.Instance.OnGameChange -= OnGameChange;
+            CoreGameSignals.Instance.onPlayerGameChange -= OnGameChange;
             InputSignals.Instance.onCasualMovement -= OnCasualMovement;
             MinigameSignals.Instance.onSlowMove -= OnSlowMove;
         }

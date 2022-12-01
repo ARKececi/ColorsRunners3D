@@ -1,3 +1,4 @@
+using System;
 using Data.UnityObject;
 using Data.ValueObject;
 using Keys;
@@ -12,7 +13,6 @@ namespace Controllers.PlayerManager
         #region Serialized Variables
 
         [SerializeField] private Rigidbody move;
-        [SerializeField] private GameObject idleObj;
 
         #endregion
         #region Private Variables
@@ -27,6 +27,8 @@ namespace Controllers.PlayerManager
         private bool _station;
         private bool _minigameHelicopter;
         private bool _hyperCasual;
+        private bool _situation;
+        private GameObject idleObj;
 
         #endregion
         #endregion
@@ -38,7 +40,12 @@ namespace Controllers.PlayerManager
             _station = true;
             _hyperCasual = true;
         }
-        
+
+        private void Start()
+        {
+            idleObj = transform.parent.parent.GetChild(0).GetChild(0).gameObject;
+        }
+
         private PlayerData GetPlayerData()
         {
             return Resources.Load<SO_PlayerData>("Data/SO_PlayerData").PlayerData;
@@ -57,6 +64,7 @@ namespace Controllers.PlayerManager
         public void GameChange()
         {
             _hyperCasual = false;
+            idleObj.transform.SetParent(transform);
         }
 
         private void FixedUpdate()
@@ -93,13 +101,33 @@ namespace Controllers.PlayerManager
         private void CasualMove()
         {
             move.velocity = new Vector3(_joystickInput.x * _playerData.MovementSide, move.velocity.y, _joystickInput.z * _playerData.MovementSide);
-            if (_joystickInput.x == 0 || _joystickInput.z == 0)
+            if (_joystickInput.x != 0 || _joystickInput.z != 0)
             {
-                idleObj.GetComponent<Animator>().ResetTrigger("Runner");
+                CasualCaracterAnimation("Runner");
             }
             else
             {
-                idleObj.GetComponent<Animator>().ResetTrigger("Idle");
+                CasualCaracterAnimation("Idle");
+            }
+        }
+
+        private void CasualCaracterAnimation(string animation)
+        {
+            if (animation == "Runner")
+            {
+                if (!_situation)
+                {
+                    idleObj.transform.GetComponent<Animator>().SetTrigger("Runner");
+                    _situation = true;
+                }
+            }
+            else
+            {
+                if (_situation)
+                {
+                    idleObj.transform.GetComponent<Animator>().SetTrigger("Idle");
+                    _situation = false;
+                }
             }
         }
 
