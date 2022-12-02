@@ -3,6 +3,7 @@ using Data.UnityObject;
 using Data.ValueObject;
 using Keys;
 using Signals;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Controllers.PlayerManager
@@ -91,6 +92,18 @@ namespace Controllers.PlayerManager
                 }
             }
         }
+
+        public void IdleObjScale(bool state)
+        {
+            if (state == false)
+            {
+                idleObj.transform.localScale -= new Vector3(.1f, .1f, .1f);
+            }
+            else
+            {
+                idleObj.transform.localScale += new Vector3(.1f, .1f, .1f);
+            }
+        }
         
         private void HyperCaualMove()
         {
@@ -101,6 +114,11 @@ namespace Controllers.PlayerManager
         private void CasualMove()
         {
             move.velocity = new Vector3(_joystickInput.x * _playerData.MovementSide, move.velocity.y, _joystickInput.z * _playerData.MovementSide);
+            Vector3 direction = Vector3.forward * _joystickInput.z + Vector3.right * _joystickInput.x;
+            if (direction != new Vector3(0,0,0))
+            {
+                idleObj.transform.localRotation = Quaternion.Slerp(idleObj.transform.rotation, Quaternion.LookRotation(direction), 4 * Time.deltaTime);
+            }
             if (_joystickInput.x != 0 || _joystickInput.z != 0)
             {
                 CasualCaracterAnimation("Runner");

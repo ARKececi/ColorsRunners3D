@@ -36,6 +36,7 @@ namespace Controllers.CameraManager
 
         public void PlayCamera(CameraState cameraState)
         {
+            _cameraState = cameraState;
             switch (_cameraState)
             {
                 case CameraState.Runner:

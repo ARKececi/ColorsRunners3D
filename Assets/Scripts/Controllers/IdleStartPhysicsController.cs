@@ -13,12 +13,14 @@ namespace Controllers
         [SerializeField] private GameObject ıdleObj;
 
         #endregion
+        #region Private Variables
+
+        #endregion
         #endregion
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                //CoreGameSignals.Instance.onStation?.Invoke(true);
                 ıdleObj.transform.position = other.transform.position;
                 ıdleObj.SetActive(true);
                 PlayerSignals.Instance.onPlayCamera?.Invoke(CameraState.Casual);

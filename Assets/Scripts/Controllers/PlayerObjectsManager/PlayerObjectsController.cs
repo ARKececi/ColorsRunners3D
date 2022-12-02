@@ -122,6 +122,7 @@ namespace Controllers.PlayerObjectsManager
         public void ObjCasualStack()
         {
             PlayerObjectsSignals.Instance.onCasualStack?.Invoke();
+            PlayerObjectsSignals.Instance.onIdleObjScale?.Invoke(true);
             transform.gameObject.SetActive(false);
         }
 

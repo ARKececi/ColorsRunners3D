@@ -4,7 +4,6 @@ namespace Enums
     {
         Runner,
         Minigame,
-        Casual,
-        HyperCasual
+        Casual
     }
 }

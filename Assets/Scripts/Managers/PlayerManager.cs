@@ -40,6 +40,7 @@ namespace Managers
             CoreGameSignals.Instance.onPlayerGameChange += OnGameChange;
             InputSignals.Instance.onCasualMovement += OnCasualMovement;
             MinigameSignals.Instance.onSlowMove += OnSlowMove;
+            PlayerObjectsSignals.Instance.onIdleObjScale += OnIdleObjScale;
         }
 
         private void UnsubscribeEvents()
@@ -52,6 +53,7 @@ namespace Managers
             CoreGameSignals.Instance.onPlayerGameChange -= OnGameChange;
             InputSignals.Instance.onCasualMovement -= OnCasualMovement;
             MinigameSignals.Instance.onSlowMove -= OnSlowMove;
+            PlayerObjectsSignals.Instance.onIdleObjScale -= OnIdleObjScale;
         }
 
         private void OnDisable()
@@ -99,6 +101,11 @@ namespace Managers
         private void OnGameChange()
         {
             playerMovementController.GameChange();
+        }
+
+        private void OnIdleObjScale(bool state)
+        {
+            playerMovementController.IdleObjScale(state);
         }
 
     }

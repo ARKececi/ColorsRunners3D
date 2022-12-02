@@ -26,6 +26,7 @@ namespace Controllers.StackManager
         
         [SerializeField] private GameObject playerObj;
         [SerializeField] private Transform pool;
+        [SerializeField] private GameObject ıdleObj;
 
         #endregion
         #region Private Variables
@@ -35,6 +36,7 @@ namespace Controllers.StackManager
         private bool _reset;
         private bool _hyperCasual;
         private bool _minigame;
+        private bool _trigger;
         
         #endregion
         #endregion
@@ -65,6 +67,7 @@ namespace Controllers.StackManager
             {
                  ListChange(PoolListObj[0], "Stack");
             }
+            _trigger = false;
         }
         
         public GameObject FirstPlayerObject(){ return StackListObj[0].gameObject;}
@@ -90,12 +93,17 @@ namespace Controllers.StackManager
                 }
                 else
                 {
-                    CoreGameSignals.Instance.onStation?.Invoke(false);
-                    CoreGameSignals.Instance.onPlayerGameChange?.Invoke();
+                    if (_trigger == false)
+                    {
+                        CoreGameSignals.Instance.onStation?.Invoke(false);
+                        CoreGameSignals.Instance.onPlayerGameChange?.Invoke();
+                        MinigameSignals.Instance.onSetCamera(_player);
+                        _trigger = true;
+                    }
                 }
             }
         }
-
+        
         public void MoveStack()
         {
             int Count = StackListObj.Count;
