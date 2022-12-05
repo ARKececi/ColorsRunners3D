@@ -12,6 +12,13 @@ namespace Controllers.PlayerManager
 
         #endregion
         #endregion
-        
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("BasketPlatform"))
+            {
+                DOVirtual.DelayedCall(1f,()=>PlayerObjectsSignals.Instance.onBasket?.Invoke());
+            }
+        }
     }
 }

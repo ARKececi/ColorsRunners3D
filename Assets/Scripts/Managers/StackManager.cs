@@ -41,6 +41,7 @@ namespace Managers
             CoreGameSignals.Instance.onReset += OnReset;
             CoreGameSignals.Instance.onGameChange += OnGameChange;
             PlayerObjectsSignals.Instance.onCasualStack += OnCasualStack;
+            PlayerObjectsSignals.Instance.onBasket += OnBasket;
 
         }
         private void UnsubscribeEvents()
@@ -58,6 +59,7 @@ namespace Managers
             CoreGameSignals.Instance.onReset -= OnReset;
             CoreGameSignals.Instance.onGameChange -= OnGameChange;
             PlayerObjectsSignals.Instance.onCasualStack -= OnCasualStack;
+            PlayerObjectsSignals.Instance.onBasket -= OnBasket;
         }
         private void OnDisable()
         {
@@ -140,6 +142,11 @@ namespace Managers
         private void OnCasualStack()
         {
             stackController.CasualStack();
+        }
+
+        private void OnBasket()
+        {
+            stackController.Basket();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Signals
         public UnityAction<bool> onSetOutlineBorder = delegate { };
         public UnityAction<GameObject> onMinigameColor = delegate { };
         public UnityAction onReset = delegate { };
+        public UnityAction onJoystick = delegate { };
         public UnityAction onUIReset = delegate { };
     }
 }

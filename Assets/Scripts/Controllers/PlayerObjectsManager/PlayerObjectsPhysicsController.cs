@@ -1,6 +1,8 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using Managers;
+using Signals;
 
 namespace Controllers.PlayerObjectsManager
 {
@@ -17,6 +19,7 @@ namespace Controllers.PlayerObjectsManager
 
         private bool _bullet;
         private bool CasualGame;
+        private bool _trigger;
         
         #endregion
         #endregion
@@ -51,6 +54,11 @@ namespace Controllers.PlayerObjectsManager
                 }
                 _bullet = true;
             }
+
+            if (other.CompareTag("IdleMap"))
+            {
+                _trigger = false;
+            }
         }
 
         private void OnTriggerStay(Collider other)
@@ -59,7 +67,11 @@ namespace Controllers.PlayerObjectsManager
             {
                 if (other.transform.position == transform.position)
                 {
-                    playerObjectsController.ObjCasualStack();
+                    if (!_trigger)
+                    {
+                        playerObjectsController.ObjCasualStack();
+                        _trigger = true;
+                    }
                 }
             }
         }

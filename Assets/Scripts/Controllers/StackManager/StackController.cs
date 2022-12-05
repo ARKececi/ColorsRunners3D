@@ -93,15 +93,26 @@ namespace Controllers.StackManager
                 }
                 else
                 {
-                    if (_trigger == false)
+                    if (!_trigger)
                     {
                         CoreGameSignals.Instance.onStation?.Invoke(false);
                         CoreGameSignals.Instance.onPlayerGameChange?.Invoke();
                         MinigameSignals.Instance.onSetCamera(_player);
+                        StackSignals.Instance.onJoystick?.Invoke();
                         _trigger = true;
                     }
                 }
             }
+        }
+
+        public void Basket()
+        {
+            MinigameObjList[0].transform.localPosition = _player.transform.GetChild(0).transform.position;
+            MinigameObjList[0].SetActive(true);
+            MinigameObjList[0].GetComponent<Rigidbody>().useGravity = true;
+            MinigameObjList[0].GetComponent<Rigidbody>().AddForce(new Vector3(0,10,3), ForceMode.VelocityChange);
+            MinigameObjList.Remove(MinigameObjList[0]);
+            MinigameObjList.TrimExcess();
         }
         
         public void MoveStack()

@@ -16,5 +16,6 @@ namespace Signals
         public UnityAction<GameObject> onMinigameAdd = delegate { };
         public UnityAction onCasualStack = delegate { };
         public UnityAction<bool> onIdleObjScale = delegate { };
+        public UnityAction onBasket = delegate { };
     }
 }

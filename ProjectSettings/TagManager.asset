@@ -12,6 +12,8 @@ TagManager:
   - Bullet
   - TarretPlatform
   - IdleObj
+  - BasketPlatform
+  - IdleMap
   layers:
   - Default
   - TransparentFX

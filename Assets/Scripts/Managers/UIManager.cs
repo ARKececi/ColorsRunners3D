@@ -28,11 +28,13 @@ namespace Managers
         private void SubscribeEvents()
         {
             StackSignals.Instance.onUIReset += OnReset;
+            StackSignals.Instance.onJoystick += OnJoystick;
         }
 
         private void UnsubscribeEvents()
         {
             StackSignals.Instance.onUIReset -= OnReset;
+            StackSignals.Instance.onJoystick -= OnJoystick;
         }
 
         private void OnDisable()
@@ -53,6 +55,11 @@ namespace Managers
             CoreGameSignals.Instance.onReset?.Invoke();
             uıPanelController.OnClosePanel(UIPanel.Reset);
             uıPanelController.OnOpenPanel(UIPanel.PlayButton);
+        }
+
+        public void OnJoystick()
+        {
+            uıPanelController.OnOpenPanel(UIPanel.Joystick);
         }
 
         public void OnReset()
